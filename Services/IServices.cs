@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services
 {
-    interface IServices
+    public interface IServices
     {
         string dosomething();
     }
