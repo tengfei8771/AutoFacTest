@@ -1,0 +1,9 @@
+E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Repository.deps.json
+E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Repository.dll
+E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Repository.pdb
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.csprojAssemblyReference.cache
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.csproj.CoreCompileInputs.cache
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.AssemblyInfoInputs.cache
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.AssemblyInfo.cs
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.dll
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.pdb
