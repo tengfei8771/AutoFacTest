@@ -8,6 +8,7 @@ namespace Repository.BaseRepository
     {
         int Insert(T entity);
         int Delete(T entity);
-        int edit(T entity);
+        int Edit(T entity);
+
     }
 }
