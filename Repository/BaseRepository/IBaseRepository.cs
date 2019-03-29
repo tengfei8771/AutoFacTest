@@ -27,12 +27,6 @@ namespace Repository.BaseRepository
         int Edit(T entity);
 
         /// <summary>
-        /// 根据ID获取实体类
-        /// </summary>
-        /// <param name="id">ID</param>
-        /// <returns>实体类</returns>
-        T GetById(string id);
-        /// <summary>
         /// lambda表达式查询
         /// </summary>
         /// <param name="predicate"></param>
