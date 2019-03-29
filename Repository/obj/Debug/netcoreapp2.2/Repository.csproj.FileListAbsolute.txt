@@ -9,3 +9,6 @@ E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.dll
 E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.pdb
 E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Repository.runtimeconfig.json
 E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Repository.runtimeconfig.dev.json
+E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Entity.dll
+E:\AutoFac测试项目\test1\Repository\bin\Debug\netcoreapp2.2\Entity.pdb
+E:\AutoFac测试项目\test1\Repository\obj\Debug\netcoreapp2.2\Repository.csproj.CopyComplete

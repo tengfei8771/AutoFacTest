@@ -26,6 +26,7 @@
         "dependencies": {
           "Autofac": "4.9.2",
           "Autofac.Extensions.DependencyInjection": "4.4.0",
+          "Entity": "1.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.EntityFrameworkCore.Tools": "2.2.3",
@@ -33,7 +34,8 @@
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.0.2105168",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
           "Repository": "1.0.0",
-          "Services": "1.0.0"
+          "Services": "1.0.0",
+          "Until": "1.0.0"
         },
         "runtime": {
           "test1.dll": {}
@@ -754,8 +756,21 @@
           }
         }
       },
+      "Entity/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.3",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3"
+        },
+        "runtime": {
+          "Entity.dll": {}
+        },
+        "compile": {
+          "Entity.dll": {}
+        }
+      },
       "Repository/1.0.0": {
         "dependencies": {
+          "Entity": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.3",
           "MySql.Data.EntityFrameworkCore": "8.0.15"
@@ -768,11 +783,23 @@
         }
       },
       "Services/1.0.0": {
+        "dependencies": {
+          "Entity": "1.0.0",
+          "Repository": "1.0.0"
+        },
         "runtime": {
           "Services.dll": {}
         },
         "compile": {
           "Services.dll": {}
+        }
+      },
+      "Until/1.0.0": {
+        "runtime": {
+          "Until.dll": {}
+        },
+        "compile": {
+          "Until.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -4004,12 +4031,22 @@
       "path": "system.security.cryptography.protecteddata/4.4.0",
       "hashPath": "system.security.cryptography.protecteddata.4.4.0.nupkg.sha512"
     },
+    "Entity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Repository/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Until/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
