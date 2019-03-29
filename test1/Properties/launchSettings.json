@@ -20,7 +20,7 @@
     "test1": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "values",
+      "launchUrl": "test/index",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
