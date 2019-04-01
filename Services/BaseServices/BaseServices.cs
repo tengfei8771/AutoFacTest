@@ -6,5 +6,6 @@ namespace Services.BaseServices
 {
     public interface BaseServices
     {
+
     }
 }
