@@ -12,19 +12,19 @@ namespace Repository.BaseRepository
         /// </summary>
         /// <param name="entity">实体类</param>
         /// <returns>受影响的行数</returns>
-        int Insert(T entity);
+        bool Insert(T entity);
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="entity">实体类</param>
         /// <returns>受影响的行数</returns>
-        int Delete(T entity);
+        bool Delete(T entity);
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="entity">实体类</param>
         /// <returns>受影响的行数</returns>
-        int Edit(T entity);
+        bool Edit(T entity);
 
         /// <summary>
         /// lambda表达式查询

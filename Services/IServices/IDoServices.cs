@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services
+namespace Services.IServices
 {
-    public interface IServices
+    public interface IDoServices
     {
         string dosomething();
     }

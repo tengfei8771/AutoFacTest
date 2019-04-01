@@ -16,21 +16,21 @@ namespace Repository.BaseRepository
             _appDBContext = appDBContext;
         }
 
-        public int Insert(T entity)
+        public bool Insert(T entity)
         {
             _appDBContext.Add(entity);
-            return _appDBContext.SaveChanges();
+            return _appDBContext.SaveChanges() > 0;
         }
-        public int Delete(T entity)
+        public bool Delete(T entity)
         {
             _appDBContext.Remove(entity);
-            return _appDBContext.SaveChanges();
+            return _appDBContext.SaveChanges()>0;
         }
 
-        public int Edit(T entity)
+        public bool Edit(T entity)
         {
             _appDBContext.Update(entity);
-            return _appDBContext.SaveChanges();
+            return _appDBContext.SaveChanges()>0;
         }
 
 

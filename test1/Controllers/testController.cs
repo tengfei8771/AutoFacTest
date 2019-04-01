@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.IServices;
 
 namespace test1.Controllers
 {
     [Route("test")]
     public class testController : Controller
     {
-        private IServices _services;
+        private IDoServices _services;
 
-        public testController(IServices services)
+        public testController(IDoServices services)
         {
             _services = services;
         }
