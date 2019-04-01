@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Repository.BaseRepository
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private AppDBContext _appDBContext;
+        private readonly AppDBContext _appDBContext;
         public BaseRepository(AppDBContext appDBContext)
         {
             _appDBContext = appDBContext;

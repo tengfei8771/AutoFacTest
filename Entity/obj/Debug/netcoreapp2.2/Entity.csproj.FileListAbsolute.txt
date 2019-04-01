@@ -8,3 +8,4 @@ E:\AutoFac测试项目\test1\Entity\obj\Debug\netcoreapp2.2\Entity.AssemblyInfoI
 E:\AutoFac测试项目\test1\Entity\obj\Debug\netcoreapp2.2\Entity.AssemblyInfo.cs
 E:\AutoFac测试项目\test1\Entity\obj\Debug\netcoreapp2.2\Entity.dll
 E:\AutoFac测试项目\test1\Entity\obj\Debug\netcoreapp2.2\Entity.pdb
+E:\AutoFac测试项目\test1\Entity\obj\Debug\netcoreapp2.2\Entity.csprojAssemblyReference.cache

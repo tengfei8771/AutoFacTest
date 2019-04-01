@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Services.BaseServices
 {
-    public class BaseServices<T> : IBaseServices<T> where T : class
+    public abstract class BaseServices<T> : IBaseServices<T> where T : class
     {
-        private IBaseRepository<T> _baseRepository;
+        private readonly IBaseRepository<T> _baseRepository;
         public BaseServices(IBaseRepository<T> baseRepository)
         {
             _baseRepository = baseRepository;
