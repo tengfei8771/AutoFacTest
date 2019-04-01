@@ -10,10 +10,10 @@ namespace Services.BaseServices
 {
     public class BaseServices<T> : IBaseServices<T> where T : class
     {
-        private IBaseServices<T> _baseServices;
-        public BaseServices(IBaseServices<T> baseServices)
+        private IBaseRepository<T> _baseRepository;
+        public BaseServices(IBaseRepository<T> baseRepository)
         {
-            _baseServices = baseServices;
+            _baseRepository = baseRepository;
         }
 
         public Dictionary<string, object> add(T entity)
@@ -21,7 +21,7 @@ namespace Services.BaseServices
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
             {
-                if (_baseServices.Insert(entity))
+                if (_baseRepository.Insert(entity))
                 {
                     r["message"] = "成功";
                     r["code"] = 2000;
@@ -65,7 +65,7 @@ namespace Services.BaseServices
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
             {
-                List<T> list = _baseServices.GetListWhere(predicate);
+                List<T> list = _baseRepository.GetListWhere(predicate);
                 if (list.Count() > 0)
                 {
                     r["code"] = 2000;

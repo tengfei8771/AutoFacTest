@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Services.BaseServices
 {
-    public interface IBaseServices<T> :IBaseRepository<T> where T:class
+    public interface IBaseServices<T>  where T:class
     {
         Dictionary<string,object> add(T entity);
         Dictionary<string,object> del(T entity);
