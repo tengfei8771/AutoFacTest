@@ -68,7 +68,22 @@ namespace Services.BaseServices
 
         public Dictionary<string, object> DelList(List<T> list)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                _baseRepository.DelList(list);
+                sw.Stop();
+                r["message"] = "成功,共耗时" + sw.ElapsedMilliseconds + "毫秒";
+                r["code"] = 2000;
+            }
+            catch (Exception e)
+            {
+                r["message"] = e.Message;
+                r["code"] = -1;
+            }
+            return r;
         }
 
         public Dictionary<string, object> edit(T entity)
@@ -143,7 +158,7 @@ namespace Services.BaseServices
                 _baseRepository.InsertList(list);
                 sw.Stop();
                 r["message"] = "成功,共耗时" + sw.ElapsedMilliseconds + "毫秒";
-                r["code"] = -1;
+                r["code"] = 2000;
             }
             catch (Exception e)
             {
@@ -170,7 +185,22 @@ namespace Services.BaseServices
 
         public Dictionary<string, object> UpdatetList(List<T> list)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                _baseRepository.UpdatetList(list);
+                sw.Stop();
+                r["message"] = "成功,共耗时" + sw.ElapsedMilliseconds + "毫秒";
+                r["code"] = 2000;
+            }
+            catch (Exception e)
+            {
+                r["message"] = e.Message;
+                r["code"] = -1;
+            }
+            return r;
         }
     }
 }

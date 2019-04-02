@@ -11,19 +11,19 @@ namespace Repository.BaseRepository
         /// 增加
         /// </summary>
         /// <param name="entity">实体类</param>
-        /// <returns>受影响的行数</returns>
+        /// <returns>是否成功</returns>
         bool Insert(T entity);
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="entity">实体类</param>
-        /// <returns>受影响的行数</returns>
+        /// <returns>是否成功</returns>
         bool Delete(T entity);
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="entity">实体类</param>
-        /// <returns>受影响的行数</returns>
+        /// <returns>是否成功</returns>
         bool Edit(T entity);
 
         /// <summary>

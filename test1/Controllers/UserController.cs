@@ -23,7 +23,7 @@ namespace test1.Controllers
             return Ok(r);
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         public IActionResult create()
         {
             List<User> users = new List<User>();
