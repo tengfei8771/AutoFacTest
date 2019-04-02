@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using EFCore.BulkExtensions;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -75,5 +76,24 @@ namespace Repository.BaseRepository
         {
             throw new NotImplementedException();
         }
+
+        public bool InsertList(List<T> list)
+        {
+            _appDBContext.BulkInsert(list);
+            return _appDBContext.SaveChanges() > 0;
+        }
+
+        public bool DelList(List<T> list)
+        {
+            _appDBContext.BulkDelete(list);
+            return _appDBContext.SaveChanges() > 0;
+        }
+
+        public bool UpdatetList(List<T> list)
+        {
+            _appDBContext.BulkUpdate(list);
+            return _appDBContext.SaveChanges() > 0;
+        }
+
     }
 }

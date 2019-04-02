@@ -57,5 +57,27 @@ namespace Repository.BaseRepository
         /// <param name="limit">每页条数</param>
         /// <returns>实体类list</returns>
         List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="list">实体</param>
+        /// <returns>操作是否成功</returns>
+        bool InsertList(List<T> list);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="list">实体</param>
+        /// <returns></returns>
+        bool DelList(List<T> list);
+
+
+        /// <summary>
+        /// 批量更新
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns>操作是否成功</returns>
+        bool UpdatetList(List<T> list);
+
     }
 }
