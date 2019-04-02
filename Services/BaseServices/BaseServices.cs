@@ -2,6 +2,7 @@
 using Repository.BaseRepository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -42,23 +43,58 @@ namespace Services.BaseServices
 
         public Dictionary<string, object> del(T entity)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            try
+            {
+                if (_baseRepository.Delete(entity))
+                {
+                    r["message"] = "成功";
+                    r["code"] = 2000;
+                }
+                else
+                {
+                    r["message"] = "失败";
+                    r["code"] = -1;
+                }
+            }
+            catch (Exception e)
+            {
+                r["message"] = e.Message;
+                r["code"] = -1;
+            }
+            return r;
         }
 
-        public bool Delete(T entity)
+
+        public Dictionary<string, object> DelList(List<T> list)
         {
             throw new NotImplementedException();
         }
 
         public Dictionary<string, object> edit(T entity)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            try
+            {
+                if (_baseRepository.Edit(entity))
+                {
+                    r["message"] = "成功";
+                    r["code"] = 2000;
+                }
+                else
+                {
+                    r["message"] = "失败";
+                    r["code"] = -1;
+                }
+            }
+            catch (Exception e)
+            {
+                r["message"] = e.Message;
+                r["code"] = -1;
+            }
+            return r;
         }
 
-        public bool Edit(T entity)
-        {
-            throw new NotImplementedException();
-        }
 
         public Dictionary<string, object> getlist(Expression<Func<T, bool>> predicate)
         {
@@ -96,9 +132,25 @@ namespace Services.BaseServices
             throw new NotImplementedException();
         }
 
-        public bool Insert(T entity)
+
+        public Dictionary<string, object> InsertList(List<T> list)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> r = new Dictionary<string, object>();
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                _baseRepository.InsertList(list);
+                sw.Stop();
+                r["message"] = "成功,共耗时" + sw.ElapsedMilliseconds + "毫秒";
+                r["code"] = -1;
+            }
+            catch (Exception e)
+            {
+                r["message"] = e.Message;
+                r["code"] = -1;
+            }
+            return r;
         }
 
         public Dictionary<string, object> quertyjoin(Expression<Func<T, bool>> predicate, string[] tableNames)
@@ -112,6 +164,11 @@ namespace Services.BaseServices
         }
 
         public List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, object> UpdatetList(List<T> list)
         {
             throw new NotImplementedException();
         }

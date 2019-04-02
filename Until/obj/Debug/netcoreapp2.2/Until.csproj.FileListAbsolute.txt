@@ -6,4 +6,3 @@ E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.AssemblyInfoInp
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.AssemblyInfo.cs
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.dll
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.pdb
-E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.csprojAssemblyReference.cache

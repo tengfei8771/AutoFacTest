@@ -77,22 +77,19 @@ namespace Repository.BaseRepository
             throw new NotImplementedException();
         }
 
-        public bool InsertList(List<T> list)
+        public void InsertList(List<T> list)
         {
             _appDBContext.BulkInsert(list);
-            return _appDBContext.SaveChanges() > 0;
         }
 
-        public bool DelList(List<T> list)
+        public void DelList(List<T> list)
         {
             _appDBContext.BulkDelete(list);
-            return _appDBContext.SaveChanges() > 0;
         }
 
-        public bool UpdatetList(List<T> list)
+        public void UpdatetList(List<T> list)
         {
             _appDBContext.BulkUpdate(list);
-            return _appDBContext.SaveChanges() > 0;
         }
 
     }

@@ -62,14 +62,14 @@ namespace Repository.BaseRepository
         /// </summary>
         /// <param name="list">实体</param>
         /// <returns>操作是否成功</returns>
-        bool InsertList(List<T> list);
+        void InsertList(List<T> list);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="list">实体</param>
         /// <returns></returns>
-        bool DelList(List<T> list);
+        void DelList(List<T> list);
 
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Repository.BaseRepository
         /// </summary>
         /// <param name="list"></param>
         /// <returns>操作是否成功</returns>
-        bool UpdatetList(List<T> list);
+        void UpdatetList(List<T> list);
 
     }
 }

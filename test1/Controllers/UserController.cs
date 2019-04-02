@@ -22,5 +22,21 @@ namespace test1.Controllers
             Dictionary<string, object> r = _userServices.getlist(p => true);
             return Ok(r);
         }
+
+        [HttpGet("create")]
+        public IActionResult create()
+        {
+            List<User> users = new List<User>();
+            for(int i = 0; i < 100000; i++)
+            {
+                User model = new User();
+                model.Id = Guid.NewGuid().ToString();
+                model.Account = "tesxst";
+                model.PassWord = "213213";
+                users.Add(model);
+            }
+            
+            return Json(_userServices.InsertList(users));
+        }
     }
 }
