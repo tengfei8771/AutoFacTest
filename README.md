@@ -39,4 +39,5 @@ PARAMETERS
 指定要使用的环境。如果省略，则使用“开发”。
 
 
-ps:本项目使用 Scaffold-DbContext "Server=localhost;Database=AppDB;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -StartupProject Entity
+ps:本项目使用 
+Scaffold-DbContext -Force "server=localhost;user id=sa;pwd=sa;database=AppDB" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -StartupProject Entity

@@ -21,3 +21,5 @@ E:\AutoFac测试项目\test1\test1\obj\Debug\netcoreapp2.2\test1.RazorTargetAsse
 E:\AutoFac测试项目\test1\test1\obj\Debug\netcoreapp2.2\test1.csproj.CopyComplete
 E:\AutoFac测试项目\test1\test1\obj\Debug\netcoreapp2.2\test1.dll
 E:\AutoFac测试项目\test1\test1\obj\Debug\netcoreapp2.2\test1.pdb
+E:\AutoFac测试项目\test1\test1\bin\Debug\netcoreapp2.2\Redis.dll
+E:\AutoFac测试项目\test1\test1\bin\Debug\netcoreapp2.2\Redis.pdb

@@ -5,8 +5,15 @@ namespace Entity.Models
 {
     public partial class User
     {
+        public User()
+        {
+            PetInfo = new HashSet<PetInfo>();
+        }
+
         public string Id { get; set; }
         public string PassWord { get; set; }
         public string Account { get; set; }
+
+        public virtual ICollection<PetInfo> PetInfo { get; set; }
     }
 }

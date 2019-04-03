@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity.Models;
 using Microsoft.AspNetCore.Mvc;
+using Redis;
 using Services.IServices;
 
 namespace test1.Controllers
@@ -19,8 +20,16 @@ namespace test1.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            Dictionary<string, object> r = _userServices.getlist(p => true);
-            return Ok(r);
+            //Dictionary<string, object> r = _userServices.getlist(p => true);
+            RedisHelper redisHelper = new RedisHelper();
+            string value = "abcdefg";
+            bool r1 = redisHelper.SetValue("mykey", value);
+            string saveValue = redisHelper.GetValue("mykey");
+            bool r2 = redisHelper.SetValue("mykey", "NewValue");
+            saveValue = redisHelper.GetValue("mykey");
+            bool r3 = redisHelper.DelValue("mykey");
+            string uncacheValue = redisHelper.GetValue("mykey");
+            return Ok(saveValue);
         }
 
         [HttpPost("create")]
