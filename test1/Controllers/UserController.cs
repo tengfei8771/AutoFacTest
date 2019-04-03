@@ -20,16 +20,8 @@ namespace test1.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            //Dictionary<string, object> r = _userServices.getlist(p => true);
-            RedisHelper redisHelper = new RedisHelper();
-            string value = "abcdefg";
-            bool r1 = redisHelper.SetValue("mykey", value);
-            string saveValue = redisHelper.GetValue("mykey");
-            bool r2 = redisHelper.SetValue("mykey", "NewValue");
-            saveValue = redisHelper.GetValue("mykey");
-            bool r3 = redisHelper.DelValue("mykey");
-            string uncacheValue = redisHelper.GetValue("mykey");
-            return Ok(saveValue);
+            Dictionary<string, object> r = _userServices.getlist(p => true);
+            return Ok(r);
         }
 
         [HttpPost("create")]
@@ -43,9 +35,26 @@ namespace test1.Controllers
                 model.Account = "tesxst";
                 model.PassWord = "213213";
                 users.Add(model);
-            }
-            
+            }           
             return Json(_userServices.InsertList(users));
+        }
+        [HttpGet("redis")]
+        public IActionResult redis()
+        {
+            RedisHelper redisHelper = new RedisHelper();
+            string value = "abcdefg";
+            bool r1 = redisHelper.SetValue("mykey", value);
+            string saveValue = redisHelper.GetValue("mykey");
+            bool r2 = redisHelper.SetValue("mykey", "NewValue");
+            saveValue = redisHelper.GetValue("mykey");
+            bool r3 = redisHelper.DelValue("mykey");
+            string uncacheValue = redisHelper.GetValue("mykey");
+            return Ok(saveValue);
+        }
+        [HttpGet("getUserAndPet")]
+        public IActionResult getUserAndPet()
+        {
+            return Ok(_userServices.getUserAndPet());
         }
     }
 }

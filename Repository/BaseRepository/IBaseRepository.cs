@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -78,6 +79,18 @@ namespace Repository.BaseRepository
         /// <param name="list"></param>
         /// <returns>操作是否成功</returns>
         void UpdatetList(List<T> list);
-
+        /// <summary>
+        /// 执行存储过程(可以执行非查询的SQL语句以及存储过程)
+        /// </summary>
+        /// <param name="CommandName">存储过程名称</param>
+        /// <param name="sqlParameters">参数</param>
+        /// <returns>执行是否成功</returns>
+        bool ExecuteSqlCommand(string CommandName, SqlParameter[] sqlParameters);
+        /// <summary>
+        /// 传统sql语句执行
+        /// </summary>
+        /// <param name="sql">sql语句</param>
+        /// <returns>实体</returns>
+        T FromSql(string sql);
     }
 }

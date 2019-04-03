@@ -13,6 +13,7 @@ namespace Entity.Models
         public string Id { get; set; }
         public string PassWord { get; set; }
         public string Account { get; set; }
+        public string PetId { get; set; }
 
         public virtual ICollection<PetInfo> PetInfo { get; set; }
     }

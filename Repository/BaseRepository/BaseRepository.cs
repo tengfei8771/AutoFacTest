@@ -3,6 +3,7 @@ using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -55,20 +56,21 @@ namespace Repository.BaseRepository
         }
 
 
-        public List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames)
+        public IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames)
         {
-            List<T> list=new List<T>();
+            DbSet<T> list;
             if (tableNames == null && tableNames.Any() == false)
             {
                 throw new Exception("缺少表的名称");
             }
             else
             {
-                foreach(string table in tableNames)
+                list = _appDBContext.Set<T>();
+                foreach(var table in tableNames)
                 {
-                    list = _appDBContext.Set<T>().Where(predicate).Include(table).ToList();
+                    list.Include(table);
                 }
-                return list;
+                return list.Where(predicate);
             }
         }
 
@@ -92,5 +94,14 @@ namespace Repository.BaseRepository
             _appDBContext.BulkUpdate(list);
         }
 
+        public bool ExecuteSqlCommand(string CommandName, SqlParameter[] sqlParameters)
+        {
+            return _appDBContext.Database.ExecuteSqlCommand(CommandName, sqlParameters) > 0;
+        }
+
+        public T FromSql(string sql)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

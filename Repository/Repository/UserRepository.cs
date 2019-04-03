@@ -18,9 +18,16 @@ namespace Repository.Repository
             _appDBContext = appDBContext;
         }
 
-        public List<User> GetUserAndPet(Expression<Func<User, bool>> predicate)
+        public List<User> GetUserAndPet()
         {
-            return _appDBContext.Set<User>().Where(predicate).Include(p => p.Id).ToList();
+            var list = _appDBContext.User.Where(p => p.Id == "10086").Join(_appDBContext.PetInfo, user => user.Id, pet => pet.OwnerId, (user, pet) => new User
+            {
+                Account = user.Account,
+                Id = user.Id,
+                PassWord = user.PassWord,
+                PetId = pet.PetName,
+            }).ToList();
+            return list;
         }
     }
 }

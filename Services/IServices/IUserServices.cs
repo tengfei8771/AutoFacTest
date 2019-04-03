@@ -8,6 +8,6 @@ namespace Services.IServices
 {
     public interface IUserServices:IBaseServices<User>
     {
-
+        Dictionary<string, object> getUserAndPet();
     }
 }
