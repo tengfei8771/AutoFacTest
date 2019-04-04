@@ -11,11 +11,11 @@ namespace Services.BaseServices
         Dictionary<string,object> add(T entity);
         Dictionary<string,object> del(T entity);
         Dictionary<string, object> edit(T entity);
-        Dictionary<string, object> getlist(Expression<Func<T, bool>> predicate);
-        Dictionary<string, object> quertyjoin(Expression<Func<T, bool>> predicate, string[] tableNames);
-        Dictionary<string, object> getlistbypage(Expression<Func<T, bool>> predicate, int page, int limit);
+        Dictionary<string, object> getList(Expression<Func<T, bool>> predicate);
+        Dictionary<string, object> quertyJoin(Expression<Func<T, bool>> predicate, string[] tableNames);
+        Dictionary<string, object> getListByPage(Expression<Func<T, bool>> predicate, int page, int limit);
 
-        Dictionary<string, object> quertyjoinbypage(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
+        Dictionary<string, object> quertyJoinByPage(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
         /// <summary>
         /// 批量插入
         /// </summary>

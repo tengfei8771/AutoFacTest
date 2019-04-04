@@ -111,7 +111,7 @@ namespace Services.BaseServices
         }
 
 
-        public Dictionary<string, object> getlist(Expression<Func<T, bool>> predicate)
+        public Dictionary<string, object> getList(Expression<Func<T, bool>> predicate)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
@@ -139,7 +139,7 @@ namespace Services.BaseServices
             return r;
         }
 
-        public Dictionary<string, object> getlistbypage(Expression<Func<T, bool>> predicate, int page, int limit)
+        public Dictionary<string, object> getListByPage(Expression<Func<T, bool>> predicate, int page, int limit)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
@@ -187,7 +187,7 @@ namespace Services.BaseServices
             return r;
         }
 
-        public Dictionary<string, object> quertyjoin(Expression<Func<T, bool>> predicate, string[] tableNames)
+        public Dictionary<string, object> quertyJoin(Expression<Func<T, bool>> predicate, string[] tableNames)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
@@ -215,7 +215,7 @@ namespace Services.BaseServices
             return r;
         }
 
-        public Dictionary<string, object> quertyjoinbypage(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
+        public Dictionary<string, object> quertyJoinByPage(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
