@@ -74,9 +74,29 @@ namespace Repository.BaseRepository
             }
         }
 
-        public List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
+        public IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
         {
-            throw new NotImplementedException();
+            DbSet<T> list;
+            if (tableNames == null && tableNames.Any() == false)
+            {
+                throw new Exception("缺少表的名称");
+            }
+            else
+            {
+                list = _appDBContext.Set<T>();
+                foreach (var table in tableNames)
+                {
+                    list.Include(table);
+                }
+                if (list.Count() < limit)
+                {
+                    return list;
+                }
+                else
+                {
+                    return list.Skip((page - 1) * limit).Take(limit);
+                }
+            }
         }
 
         public void InsertList(List<T> list)
@@ -99,7 +119,7 @@ namespace Repository.BaseRepository
             return _appDBContext.Database.ExecuteSqlCommand(CommandName, sqlParameters) > 0;
         }
 
-        public T FromSql(string sql)
+        public List<T> FromSql(string sql)
         {
             throw new NotImplementedException();
         }

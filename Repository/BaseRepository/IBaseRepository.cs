@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -39,7 +40,7 @@ namespace Repository.BaseRepository
         /// <param name="predicate"></param>
         /// <param name="tableNames"></param>
         /// <returns>实体类list</returns>
-        List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames);
+        IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames);
         /// <summary>
         /// 分页查询
         /// </summary>
@@ -50,14 +51,14 @@ namespace Repository.BaseRepository
         List<T> GetListByPageWhere(Expression<Func<T, bool>> predicate,int page,int limit);
 
         /// <summary>
-        /// 多表联查分页方法
+        /// 多表联查分页方法 (外键关联)
         /// </summary>
         /// <param name="predicate">表达式</param>
         /// <param name="tableNames">表名</param>
         /// <param name="page">页数</param>
         /// <param name="limit">每页条数</param>
         /// <returns>实体类list</returns>
-        List<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
+        IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
         /// <summary>
         /// 批量插入
         /// </summary>
@@ -91,6 +92,6 @@ namespace Repository.BaseRepository
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <returns>实体</returns>
-        T FromSql(string sql);
+        List<T> FromSql(string sql);
     }
 }
