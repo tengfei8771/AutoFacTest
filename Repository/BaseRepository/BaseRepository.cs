@@ -74,7 +74,7 @@ namespace Repository.BaseRepository
             }
         }
 
-        public IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
+        public IQueryable<T> QueryJoinByPage(Expression<Func<T, bool>> predicate, string[] tableNames, int page, int limit)
         {
             DbSet<T> list;
             if (tableNames == null && tableNames.Any() == false)

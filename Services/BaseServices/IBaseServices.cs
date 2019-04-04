@@ -13,13 +13,21 @@ namespace Services.BaseServices
         Dictionary<string, object> edit(T entity);
         Dictionary<string, object> getlist(Expression<Func<T, bool>> predicate);
         Dictionary<string, object> quertyjoin(Expression<Func<T, bool>> predicate, string[] tableNames);
-        //Dictionary<string, object> GetListByPageWhere(Expression<Func<T, bool>> predicate, int page, int limit);
+        Dictionary<string, object> getlistbypage(Expression<Func<T, bool>> predicate, int page, int limit);
 
+        Dictionary<string, object> quertyjoinbypage(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="list">实体list</param>
+        /// <returns></returns>
         Dictionary<string,object> InsertList(List<T> list);
-
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="list">实体list</param>
+        /// <returns></returns>
         Dictionary<string, object> DelList(List<T> list);
-
-
         /// <summary>
         /// 批量更新
         /// </summary>

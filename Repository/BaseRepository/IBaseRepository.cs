@@ -58,7 +58,7 @@ namespace Repository.BaseRepository
         /// <param name="page">页数</param>
         /// <param name="limit">每页条数</param>
         /// <returns>实体类list</returns>
-        IQueryable<T> QueryJoin(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
+        IQueryable<T> QueryJoinByPage(Expression<Func<T, bool>> predicate, string[] tableNames,int page,int limit);
         /// <summary>
         /// 批量插入
         /// </summary>
