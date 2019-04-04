@@ -102,6 +102,7 @@ namespace test1
             {
                 builder.RegisterAssemblyTypes(GetAssemblyByName("Services")).Where(t => t.Name.EndsWith("Services")).AsImplementedInterfaces();
                 builder.RegisterAssemblyTypes(GetAssemblyByName("Repository")).Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces();
+                builder.RegisterAssemblyTypes(GetAssemblyByName("Redis")).Where(a => a.Name.EndsWith("Helper")).AsImplementedInterfaces();
             }
         }
         public static Assembly GetAssemblyByName(string name)

@@ -6,7 +6,7 @@ using StackExchange.Redis;
 
 namespace Redis
 {
-    public class RedisHelper
+    public class RedisHelper:IRedisHelper
     {
         private ConnectionMultiplexer redis { get; set; }
         private IDatabase db { get; set; }

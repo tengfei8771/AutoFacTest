@@ -13,14 +13,16 @@ namespace test1.Controllers
     public class UserController : Controller
     {
         private readonly IUserServices _userServices;
-        public UserController(IUserServices userServices)
+        private readonly IRedisHelper _redisHelper;
+        public UserController(IUserServices userServices,IRedisHelper redisHelper)
         {
             _userServices = userServices;
+            _redisHelper = redisHelper;
         }
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            Dictionary<string, object> r = _userServices.getlist(p => true);
+            Dictionary<string, object> r = _userServices.getList(p => true);
             return Ok(r);
         }
 
@@ -41,20 +43,24 @@ namespace test1.Controllers
         [HttpGet("redis")]
         public IActionResult redis()
         {
-            RedisHelper redisHelper = new RedisHelper();
             string value = "abcdefg";
-            bool r1 = redisHelper.SetValue("mykey", value);
-            string saveValue = redisHelper.GetValue("mykey");
-            bool r2 = redisHelper.SetValue("mykey", "NewValue");
-            saveValue = redisHelper.GetValue("mykey");
-            bool r3 = redisHelper.DelValue("mykey");
-            string uncacheValue = redisHelper.GetValue("mykey");
+            bool r1 = _redisHelper.SetValue("mykey", value);
+            string saveValue = _redisHelper.GetValue("mykey");
+            bool r2 = _redisHelper.SetValue("mykey", "NewValue");
+            saveValue = _redisHelper.GetValue("mykey");
+            bool r3 = _redisHelper.DelValue("mykey");
+            string uncacheValue = _redisHelper.GetValue("mykey");
             return Ok(saveValue);
         }
         [HttpGet("getUserAndPet")]
         public IActionResult getUserAndPet()
         {
-            return Ok(_userServices.getUserAndPet());
+            //return Ok(_userServices.getUserAndPet());
+            string[] tableNames = new string[]
+            {
+                "PetInfo"
+            };
+            return Ok(_userServices.quertyJoin(p => true, tableNames));
         }
     }
 }

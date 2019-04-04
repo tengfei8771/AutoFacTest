@@ -92,6 +92,6 @@ namespace Repository.BaseRepository
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <returns>实体</returns>
-        List<T> FromSql(string sql);
+        IQueryable<T> FromSql(string sql);
     }
 }

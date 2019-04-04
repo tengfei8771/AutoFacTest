@@ -119,9 +119,10 @@ namespace Repository.BaseRepository
             return _appDBContext.Database.ExecuteSqlCommand(CommandName, sqlParameters) > 0;
         }
 
-        public List<T> FromSql(string sql)
+        public IQueryable<T> FromSql(string sql)
         {
-            throw new NotImplementedException();
+            return _appDBContext.Set<T>().FromSql(sql);
         }
+
     }
 }
