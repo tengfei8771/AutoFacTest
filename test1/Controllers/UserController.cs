@@ -60,7 +60,7 @@ namespace test1.Controllers
             {
                 "PetInfo"
             };
-            return Ok(_userServices.quertyJoin(p => true, tableNames));
+            return Ok(_userServices.getUserAndPet());
         }
     }
 }

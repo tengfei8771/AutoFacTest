@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,7 @@ namespace test1
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             string ConStr = GetConnectStr();
-            services.AddDbContext<AppDBContext>(options => options.UseSqlServer(ConStr));
+            services.AddDbContext<AppDBContext>(options => options.UseSqlServer(ConStr).ConfigureWarnings(warning=>warning.Throw(CoreEventId.IncludeIgnoredWarning)));//显式抛出EFCORE INCLUDE错误
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             return RegisterAutofac(services);
         }

@@ -18,15 +18,22 @@ namespace Repository.Repository
             _appDBContext = appDBContext;
         }
 
-        public List<User> GetUserAndPet()
+        public dynamic GetUserAndPet()
         {
-            var list = _appDBContext.User.Where(p => p.Id == "10086").Join(_appDBContext.PetInfo, user => user.Id, pet => pet.OwnerId, (user, pet) => new User
-            {
-                Account = user.Account,
-                Id = user.Id,
-                PassWord = user.PassWord,
-                PetId = pet.PetName,
-            }).ToList();
+            var list = (from User in _appDBContext.User
+                        join pet in _appDBContext.PetInfo on User.Id equals pet.OwnerId into temp
+                        from t in temp.DefaultIfEmpty()
+                        where User.Id == "999"
+                        select new
+                        {
+                            User.Id,
+                            User.PassWord,
+                            User.Account,
+                            t.PetId,
+                            t.PetAge,
+                            t.PetName,
+                            t.PetSex
+                        }).ToList();
             return list;
         }
     }

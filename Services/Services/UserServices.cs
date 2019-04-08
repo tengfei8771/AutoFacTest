@@ -23,12 +23,13 @@ namespace Services.Services
             Dictionary<string, object> res = new Dictionary<string, object>();
             try
             {
-                List<User> users = _userRepository.GetUserAndPet();
-                if (users.Count() > 0)
+                var users = _userRepository.GetUserAndPet();
+                if (true)
                 {
                     res["code"] = 2000;
                     res["items"] = users;
                     res["message"] = "成功";
+                    res["type"] = users.gettype();
                 }
                 else
                 {

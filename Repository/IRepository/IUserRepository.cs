@@ -9,6 +9,6 @@ namespace Repository.IRepository
 {
     public interface IUserRepository:IBaseRepository<User>
     {
-        List<User> GetUserAndPet();
+        dynamic GetUserAndPet();
     }
 }
