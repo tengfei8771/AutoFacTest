@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Entity.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,17 +37,7 @@ namespace test1
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("any", builder =>
-            //    {
-            //        builder.AllowAnyOrigin()
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader()
-            //        .AllowCredentials();
-            //    });
-            //});
-            services.AddCors();
+            services.AddCors();//注册跨域
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = Context => true;
@@ -55,7 +46,7 @@ namespace test1
             string ConStr = GetConnectStr();
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(ConStr).ConfigureWarnings(warning=>warning.Throw(CoreEventId.IncludeIgnoredWarning)));//显式抛出EFCORE INCLUDE错误
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            return RegisterAutofac(services);
+            return RegisterAutofac(services);//AutoFac接管自带容器
         }
 
         /// <summary>
