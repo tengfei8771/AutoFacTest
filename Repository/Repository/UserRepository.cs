@@ -18,12 +18,12 @@ namespace Repository.Repository
             _appDBContext = appDBContext;
         }
 
-        public dynamic GetUserAndPet()
+        public dynamic GetUserAndPet(out int toatal)
         {
             var list = (from User in _appDBContext.User
                         join pet in _appDBContext.PetInfo on User.Id equals pet.OwnerId into temp
                         from t in temp.DefaultIfEmpty()
-                        where User.Id == "999"
+                        where User.Id != "9999999"
                         select new
                         {
                             User.Id,
@@ -34,6 +34,7 @@ namespace Repository.Repository
                             t.PetName,
                             t.PetSex
                         }).ToList();
+            toatal = list.Count();
             return list;
         }
     }
