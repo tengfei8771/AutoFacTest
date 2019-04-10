@@ -22,6 +22,13 @@ namespace Until.TokenHelper
             var payLoad = JsonConvert.DeserializeObject<Dictionary<string, object>>(Base64UrlEncoder.Decode(jwtArr[1]));
             return payLoad;
         }
+        /// <summary>
+        /// 手动实现生成Token的方法，和下面的方法实现效果一致
+        /// </summary>
+        /// <param name="payLoad">载荷，存放不重要的用户数据，例如用户ID</param>
+        /// <param name="expiresMinute">过期时间</param>
+        /// <param name="header">Http请求头部信息</param>
+        /// <returns>生成的token</returns>
         public static string CreateToken(Dictionary<string, object> payLoad, int expiresMinute, Dictionary<string, object> header = null)
         {
             if (header == null)
@@ -45,7 +52,12 @@ namespace Until.TokenHelper
             var encodedJwt = string.Concat(encodedHeader, ".", encodedPayload, ".", encodedSignature);
             return encodedJwt;
         }
-
+        /// <summary>
+        /// 微软的方法实现token生成
+        /// </summary>
+        /// <param name="payLoad">载荷</param>
+        /// <param name="expiresMinute">过期时间</param>
+        /// <returns>生成的token</returns>
         public static string CreateTookenByHandler(Dictionary<string,object>payLoad, int expiresMinute)
         {
             var now = DateTime.UtcNow;
@@ -65,6 +77,12 @@ namespace Until.TokenHelper
             var encodeJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             return encodeJwt;
         }
+        /// <summary>
+        /// 验证token
+        /// </summary>
+        /// <param name="encodeJwt">token</param>
+        /// <param name="validatePayLoad">验证载荷</param>
+        /// <returns>验证是否成功</returns>
 
         public static bool Validate(string encodeJwt, Func<Dictionary<string, object>, bool> validatePayLoad)
         {
