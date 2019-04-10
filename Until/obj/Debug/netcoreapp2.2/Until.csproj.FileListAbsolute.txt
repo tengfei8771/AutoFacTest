@@ -7,3 +7,12 @@ E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.AssemblyInfo.cs
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.dll
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.pdb
 E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.csprojAssemblyReference.cache
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.dll
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\Newtonsoft.Json.dll
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.pdb
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.xml
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\Newtonsoft.Json.xml
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
+E:\AutoFac测试项目\test1\Until\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
+E:\AutoFac测试项目\test1\Until\obj\Debug\netcoreapp2.2\Until.csproj.CopyComplete

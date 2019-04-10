@@ -6,6 +6,7 @@ using Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Redis;
 using Services.IServices;
+using Until.TokenHelper;
 
 namespace test1.Controllers
 {
@@ -61,6 +62,27 @@ namespace test1.Controllers
                 "PetInfo"
             };
             return Ok(_userServices.getUserAndPet());
+        }
+        [HttpGet("Token")]
+        public IActionResult createToken()
+        {
+            Dictionary<string, object> payload = new Dictionary<string, object>();
+            payload["USER_ID"] = "77881sdsad";
+            int exp = 30;
+            string token = TokenHelper.CreateTookenByHandler(payload, exp);
+            return Ok(token);
+        }
+        [HttpGet("validateToken")]
+        public IActionResult validateToken(string token)
+        {
+            if (TokenHelper.Validate(token))
+            {
+                return Ok(1);
+            }
+            else
+            {
+                return Ok(2);
+            }
         }
     }
 }

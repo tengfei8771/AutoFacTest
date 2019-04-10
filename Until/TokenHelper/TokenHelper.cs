@@ -81,10 +81,10 @@ namespace Until.TokenHelper
         /// 验证token
         /// </summary>
         /// <param name="encodeJwt">token</param>
-        /// <param name="validatePayLoad">验证载荷</param>
+        /// <param name="validatePayLoad">自定义验证载荷</param>
         /// <returns>验证是否成功</returns>
 
-        public static bool Validate(string encodeJwt, Func<Dictionary<string, object>, bool> validatePayLoad)
+        public static bool Validate(string encodeJwt)//Func<Dictionary<string, object>, bool> validatePayLoad 自定义验证参数
         {
             var success = true;
             var jwtArr = encodeJwt.Split('.');
@@ -103,7 +103,7 @@ namespace Until.TokenHelper
             success = success && (now >= long.Parse(payLoad["nbf"].ToString()) && now < long.Parse(payLoad["exp"].ToString()));
 
             //再其次 进行自定义的验证
-            success = success && validatePayLoad(payLoad);
+            //success = success && validatePayLoad(payLoad);
 
             return success;
         }
