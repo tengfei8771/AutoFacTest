@@ -1,8 +1,10 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,7 +13,28 @@ namespace Until.TokenHelper
 {
     public class TokenHelper
     {
-        private static readonly string securityKey = "ABCDEFGHIJKLMN12345678";
+        public static string securityKey { get; set; }
+
+        private static string getKey()
+        {
+            string str;
+            try
+            {
+                using (StreamReader fs = File.OpenText(Directory.GetCurrentDirectory() + "\\appsettings.json"))
+                {
+                    using(JsonTextReader reader = new JsonTextReader(fs))
+                    {
+                        JObject t = (JObject)JToken.ReadFrom(reader);
+                        str = t["securityKey"].ToString();
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            return str;
+        }
 
         public static long ToUnixEpochDate(DateTime date) =>
             (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
@@ -38,6 +61,7 @@ namespace Until.TokenHelper
                     new KeyValuePair<string, object>("typ", "JWT")
                 });
             }
+            getKey();
             //添加jwt可用时间（应该必须要的）
             var now = DateTime.UtcNow;
             payLoad["nbf"] = ToUnixEpochDate(now);//可用时间起始
@@ -67,6 +91,7 @@ namespace Until.TokenHelper
                 var tempCliam = new Claim(key, payLoad[key]?.ToString());
                 claim.Add(tempCliam);
             }
+            getKey();
             var jwt = new JwtSecurityToken(
                 issuer: null,
                 audience: null,
@@ -106,6 +131,10 @@ namespace Until.TokenHelper
             //success = success && validatePayLoad(payLoad);
 
             return success;
+        }
+        public  TokenHelper()
+        {
+            securityKey = getKey();
         }
     }
 }

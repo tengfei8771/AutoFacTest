@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Redis;
 using Services.IServices;
@@ -11,6 +12,7 @@ using Until.TokenHelper;
 namespace test1.Controllers
 {
     [Route("user")]
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly IUserServices _userServices;
@@ -72,17 +74,11 @@ namespace test1.Controllers
             string token = TokenHelper.CreateTookenByHandler(payload, exp);
             return Ok(token);
         }
+        [Authorize]
         [HttpGet("validateToken")]
-        public IActionResult validateToken(string token)
+        public IActionResult validateToken()
         {
-            if (TokenHelper.Validate(token))
-            {
-                return Ok(1);
-            }
-            else
-            {
-                return Ok(2);
-            }
+            return Ok(1);
         }
     }
 }

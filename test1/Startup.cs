@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Entity.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
+using Until.TokenHelper;
 
 namespace test1
 {
@@ -82,6 +76,7 @@ namespace test1
                 builder.AllowAnyMethod();
                 builder.AllowAnyOrigin();
             });
+            app.UseMiddleware<JwtCustomerAuthorizeMiddleware>();//添加拦截器验证JWT中间件
             app.UseMvc();
         }
 

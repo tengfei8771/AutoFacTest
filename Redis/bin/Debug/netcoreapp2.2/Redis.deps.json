@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "52d399217c2d4ccf3f84fad7cee5ab26da565412"
+    "signature": "655452a443cdc57d03ea20b6c8820786802cc042"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,10 +9,34 @@
       "Redis/1.0.0": {
         "dependencies": {
           "StackExchange.Redis": "2.0.571",
+          "Until": "1.0.0",
           "Newtonsoft.Json": "11.0.0.0"
         },
         "runtime": {
           "Redis.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/2.2.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.18316"
+          }
+        }
+      },
+      "Microsoft.Extensions.Primitives/2.2.0": {
+        "dependencies": {
+          "System.Memory": "4.5.1",
+          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.18315"
+          }
         }
       },
       "Microsoft.Win32.Registry/4.5.0": {
@@ -100,6 +124,7 @@
           }
         }
       },
+      "System.Memory/4.5.1": {},
       "System.Runtime.CompilerServices.Unsafe/4.5.2": {
         "runtime": {
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
@@ -166,11 +191,46 @@
           }
         }
       },
+      "Until/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0.0",
+          "System.IdentityModel.Tokens.Jwt": "5.3.0.0",
+          "Microsoft.IdentityModel.Tokens": "5.3.0.0"
+        },
+        "runtime": {
+          "Until.dll": {}
+        }
+      },
       "Newtonsoft.Json/11.0.0.0": {
         "runtime": {
           "Newtonsoft.Json.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.0.2.21924"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Http.Abstractions.Reference/2.2.0.0": {
+        "runtime": {
+          "Microsoft.AspNetCore.Http.Abstractions.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.18316"
+          }
+        }
+      },
+      "System.IdentityModel.Tokens.Jwt.Reference/5.3.0.0": {
+        "runtime": {
+          "System.IdentityModel.Tokens.Jwt.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.51005"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Tokens.Reference/5.3.0.0": {
+        "runtime": {
+          "Microsoft.IdentityModel.Tokens.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.51005"
           }
         }
       }
@@ -182,6 +242,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.AspNetCore.Http.Features/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0GNO7G290ULLrFcL7Yig7EYNpWF0ZisATpoPGszArH7wtuDDNt97o3vr4CANPzxAcJuXlhIPKuAhk+GPKm6AHg==",
+      "path": "microsoft.aspnetcore.http.features/2.2.0",
+      "hashPath": "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Primitives/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vpH+o7f8obVx65PiEtBXxTwL5RosK60fNIMy/y8WGE4/r4IvAqQGukOzMhxsp//Accvd7kmukyQTVkqVYdaDyA==",
+      "path": "microsoft.extensions.primitives/2.2.0",
+      "hashPath": "microsoft.extensions.primitives.2.2.0.nupkg.sha512"
+    },
     "Microsoft.Win32.Registry/4.5.0": {
       "type": "package",
       "serviceable": true,
@@ -192,21 +266,21 @@
     "Pipelines.Sockets.Unofficial/2.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Zs8/u0ItFiq32NCs0c3euvYMHcqDeDnkq9lXeRBLQeUmJUTK2KoENmDx2wheFyDxiQVmwRy1T/O6Qi+Z8SyRpQ==",
+      "sha512": "sha512-A4hO/ye+494txETuQ5GCFR7zjn9hGk93aGpLRIB9OY+JR3yC/WY/TupSM3c4y83cv9E9YLb6mRbUmmd985E9dw==",
       "path": "pipelines.sockets.unofficial/2.0.7",
       "hashPath": "pipelines.sockets.unofficial.2.0.7.nupkg.sha512"
     },
     "StackExchange.Redis/2.0.571": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-y/E/rDlQ7RkGB6yF71760QF9M0xZ//3DKuW4rZlZnnZUZomRMnyUObH7xQSJR6+bd+XxKjeI/Qt/B/nkDghX9Q==",
+      "sha512": "sha512-Z/ISEgUXf+cs4pvpXXQb06spPmeFMJrEjfaYny9mwqR/ofNzziboSTnsdawqHxLdEB5NRFj3z0q/0FTnz77HJg==",
       "path": "stackexchange.redis/2.0.571",
       "hashPath": "stackexchange.redis.2.0.571.nupkg.sha512"
     },
     "System.Buffers/4.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VCJfpWcYG1gT3WwivZWgT0KaqY678MQBvrOI2si6V8GHeQOtuW+wpiv5ss4KyfGG+cFFdPNaI+nw2/kExCtGgQ==",
+      "sha512": "sha512-Ii2bedd4HVzddupdU35n3ygohUPlNn7MDimBOYcwWNce2NizQ1fCSaQJY1Tzv80aMqOGpVcU4wZr/Xe50xcTwg==",
       "path": "system.buffers/4.4.0",
       "hashPath": "system.buffers.4.4.0.nupkg.sha512"
     },
@@ -231,10 +305,17 @@
       "path": "system.io.pipelines/4.5.1",
       "hashPath": "system.io.pipelines.4.5.1.nupkg.sha512"
     },
+    "System.Memory/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sDJYJpGtTgx+23Ayu5euxG5mAXWdkDb4+b0rD0Cab0M1oQS9H0HXGPriKcqpXuiJDTV7fTp/d+fMDJmnr6sNvA==",
+      "path": "system.memory/4.5.1",
+      "hashPath": "system.memory.4.5.1.nupkg.sha512"
+    },
     "System.Runtime.CompilerServices.Unsafe/4.5.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wprSFgext8cwqymChhrBLu62LMg/1u92bU+VOwyfBimSPVFXtsNqEWC92Pf9ofzJFlk4IHmJA75EDJn1b2goAQ==",
+      "sha512": "sha512-hMkdWxksypQlFXB7JamQegDscxEAQO4FHd/lw/zlSZU9dZgAij65xjCrXer183wvoNAzJic5zzjj2oc9/dloWg==",
       "path": "system.runtime.compilerservices.unsafe/4.5.2",
       "hashPath": "system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
     },
@@ -273,7 +354,27 @@
       "path": "system.threading.channels/4.5.0",
       "hashPath": "system.threading.channels.4.5.0.nupkg.sha512"
     },
+    "Until/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Newtonsoft.Json/11.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Http.Abstractions.Reference/2.2.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.IdentityModel.Tokens.Jwt.Reference/5.3.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.IdentityModel.Tokens.Reference/5.3.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
