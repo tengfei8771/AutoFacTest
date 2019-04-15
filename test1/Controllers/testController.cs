@@ -9,7 +9,7 @@ using Services.IServices;
 
 namespace test1.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("test")]
     public class testController : Controller
     {

@@ -15,7 +15,7 @@ namespace Until.TokenHelper
     {
         public static string securityKey { get; set; }
 
-        private static string getKey()
+        private static string getKey(string key)
         {
             string str;
             try
@@ -25,7 +25,7 @@ namespace Until.TokenHelper
                     using(JsonTextReader reader = new JsonTextReader(fs))
                     {
                         JObject t = (JObject)JToken.ReadFrom(reader);
-                        str = t["securityKey"].ToString();
+                        str = t[key].ToString();
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace Until.TokenHelper
                     new KeyValuePair<string, object>("typ", "JWT")
                 });
             }
-            getKey();
+            securityKey = getKey(securityKey);
             //添加jwt可用时间（应该必须要的）
             var now = DateTime.UtcNow;
             payLoad["nbf"] = ToUnixEpochDate(now);//可用时间起始
@@ -91,10 +91,13 @@ namespace Until.TokenHelper
                 var tempCliam = new Claim(key, payLoad[key]?.ToString());
                 claim.Add(tempCliam);
             }
-            getKey();
+            if (securityKey == null || securityKey.Length == 0)
+            {
+                securityKey=getKey("securityKey");
+            }
             var jwt = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
+                issuer: getKey("issuer"),
+                audience: getKey("audience"),
                 claims: claim,
                 notBefore: now,
                 expires: now.Add(TimeSpan.FromMinutes(expiresMinute)),
@@ -111,11 +114,14 @@ namespace Until.TokenHelper
 
         public static bool Validate(string encodeJwt)//Func<Dictionary<string, object>, bool> validatePayLoad 自定义验证参数
         {
+            if (securityKey == null || securityKey.Length == 0)
+            {
+                securityKey=getKey("securityKey");
+            }
             var success = true;
             var jwtArr = encodeJwt.Split('.');
             var header = JsonConvert.DeserializeObject<Dictionary<string, object>>(Base64UrlEncoder.Decode(jwtArr[0]));
             var payLoad = JsonConvert.DeserializeObject<Dictionary<string, object>>(Base64UrlEncoder.Decode(jwtArr[1]));
-
             var hs256 = new HMACSHA256(Encoding.ASCII.GetBytes(securityKey));
             //首先验证签名是否正确（必须的）
             success = success && string.Equals(jwtArr[2], Base64UrlEncoder.Encode(hs256.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(jwtArr[0], ".", jwtArr[1])))));
@@ -134,7 +140,7 @@ namespace Until.TokenHelper
         }
         public  TokenHelper()
         {
-            securityKey = getKey();
+            securityKey = getKey("securityKey");
         }
     }
 }

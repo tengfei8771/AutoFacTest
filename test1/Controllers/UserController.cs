@@ -78,7 +78,7 @@ namespace test1.Controllers
         [HttpGet("validateToken")]
         public IActionResult validateToken()
         {
-            return Ok(1);
+            return Ok();
         }
     }
 }

@@ -2,9 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Entity.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Until.TokenHelper;
@@ -32,6 +35,26 @@ namespace test1
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();//注册跨域
+            services.AddAuthentication(t =>
+            {
+                t.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                t.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,//验证安全key
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["securityKey"].ToString())),//获取安全key
+                    ValidateIssuer = true,//验证发行人
+                    ValidIssuer = Configuration["issuer"],//发行人
+                    ValidateAudience = true,//验证订阅者
+                    ValidAudience =Configuration["audience"],// 
+                    ValidateLifetime = true,//验证过期时间
+                    ClockSkew = TimeSpan.Zero,
+                    RequireExpirationTime = true,
+                };
+            });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = Context => true;
@@ -76,7 +99,8 @@ namespace test1
                 builder.AllowAnyMethod();
                 builder.AllowAnyOrigin();
             });
-            app.UseMiddleware<JwtCustomerAuthorizeMiddleware>();//添加拦截器验证JWT中间件
+            //app.UseMiddleware<JwtCustomerAuthorizeMiddleware>();//添加拦截器验证JWT中间件
+            app.UseAuthentication();
             app.UseMvc();
         }
 
