@@ -19,4 +19,3 @@ E:\AutoFac测试项目\AutoFacTest\Entity\obj\Debug\netcoreapp2.2\Entity.Assembl
 E:\AutoFac测试项目\AutoFacTest\Entity\obj\Debug\netcoreapp2.2\Entity.AssemblyInfo.cs
 E:\AutoFac测试项目\AutoFacTest\Entity\obj\Debug\netcoreapp2.2\Entity.dll
 E:\AutoFac测试项目\AutoFacTest\Entity\obj\Debug\netcoreapp2.2\Entity.pdb
-E:\AutoFac测试项目\AutoFacTest\Entity\obj\Debug\netcoreapp2.2\Entity.csprojAssemblyReference.cache
