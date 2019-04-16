@@ -48,3 +48,4 @@ E:\AutoFac测试项目\AutoFacTest\test1\bin\Debug\netcoreapp2.2\test1.runtimeco
 E:\AutoFac测试项目\AutoFacTest\test1\bin\Debug\netcoreapp2.2\test1.runtimeconfig.dev.json
 E:\AutoFac测试项目\AutoFacTest\test1\bin\Debug\netcoreapp2.2\test1.dll
 E:\AutoFac测试项目\AutoFacTest\test1\bin\Debug\netcoreapp2.2\test1.pdb
+E:\AutoFac测试项目\AutoFacTest\test1\bin\Debug\netcoreapp2.2\log4netConfig.xml

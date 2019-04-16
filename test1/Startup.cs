@@ -6,6 +6,9 @@ using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Entity.Models;
+using log4net;
+using log4net.Config;
+using log4net.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,9 +27,13 @@ namespace test1
 {
     public class Startup
     {
+        public static ILoggerRepository Repository { get; set; }//注入log4net
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Repository = LogManager.CreateRepository("test");
+            XmlConfigurator.Configure(Repository, new FileInfo("log4netConfig"));
+
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +42,7 @@ namespace test1
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();//注册跨域
+            #region JWT解析验证注册
             services.AddAuthentication(t =>
             {
                 t.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,6 +63,7 @@ namespace test1
                     RequireExpirationTime = true,
                 };
             });
+            #endregion
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = Context => true;
@@ -103,7 +112,7 @@ namespace test1
             app.UseAuthentication();
             app.UseMvc();
         }
-
+        #region autofac帮助类
         /// <summary>
         /// autofac类
         /// </summary>
@@ -120,6 +129,8 @@ namespace test1
         {
             return Assembly.Load(name);
         }
+        #endregion
+        #region 获取连接字符串
         /// <summary>
         /// 获取连接字符串
         /// </summary>
@@ -145,5 +156,6 @@ namespace test1
             }
             return ConStr;
         }
+        #endregion
     }
 }
