@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace test1.Log4NetHelper
 {
-    public class LogHelper
+    public class LogHelper: ILogHelper
     {
         private readonly ConcurrentDictionary<Type, ILog> Loggers = new ConcurrentDictionary<Type, ILog>();
 

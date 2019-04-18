@@ -10,6 +10,7 @@
         "dependencies": {
           "Entity": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "2.2.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0.0",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.0.0",
@@ -1507,6 +1508,14 @@
           "Entity.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0.0": {
+        "runtime": {
+          "Microsoft.AspNetCore.Hosting.Abstractions.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.18316"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Http.Abstractions/2.2.0.0": {
         "runtime": {
           "Microsoft.AspNetCore.Http.Abstractions.dll": {
@@ -2495,6 +2504,11 @@
     },
     "Entity/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

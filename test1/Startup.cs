@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using test1.Filter;
 using Until.TokenHelper;
 
 namespace test1
@@ -42,6 +43,10 @@ namespace test1
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();//注册跨域
+            services.AddMvc(o=> 
+            {
+                o.Filters.Add(typeof(GlobalExceptionsFilter));
+            });//注入全局异常捕捉
             #region JWT解析验证注册
             services.AddAuthentication(t =>
             {
@@ -120,9 +125,10 @@ namespace test1
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterAssemblyTypes(GetAssemblyByName("Services")).Where(t => t.Name.EndsWith("Services")).AsImplementedInterfaces();
-                builder.RegisterAssemblyTypes(GetAssemblyByName("Repository")).Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces();
-                builder.RegisterAssemblyTypes(GetAssemblyByName("Redis")).Where(a => a.Name.EndsWith("Helper")).AsImplementedInterfaces();
+                builder.RegisterAssemblyTypes(GetAssemblyByName("Services")).Where(t => t.Name.EndsWith("Services")).AsImplementedInterfaces();//注册服务层所有已Services结尾的实现类
+                builder.RegisterAssemblyTypes(GetAssemblyByName("test1")).Where(t => t.Name.EndsWith("Helper")).AsImplementedInterfaces();
+                builder.RegisterAssemblyTypes(GetAssemblyByName("Repository")).Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces();//注册仓储层所有已Repository结尾的实现类
+                builder.RegisterAssemblyTypes(GetAssemblyByName("Redis")).Where(a => a.Name.EndsWith("Helper")).AsImplementedInterfaces();//注册Redis
             }
         }
         public static Assembly GetAssemblyByName(string name)

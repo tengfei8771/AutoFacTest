@@ -40,3 +40,5 @@ E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Microsoft.AspNe
 E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Entity.pdb
 E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Abstractions.xml
 E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.xml
+E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Hosting.Abstractions.dll
+E:\AutoFac测试项目\AutoFacTest\Until\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Hosting.Abstractions.xml
