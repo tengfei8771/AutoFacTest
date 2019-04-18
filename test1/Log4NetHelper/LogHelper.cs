@@ -11,7 +11,7 @@ namespace test1.Log4NetHelper
     {
         private readonly ConcurrentDictionary<Type, ILog> Loggers = new ConcurrentDictionary<Type, ILog>();
 
-        private ILog getLogger(Type source)
+        private ILog GetLogger(Type source)
         {
             if (Loggers.ContainsKey(source))
             {
@@ -52,7 +52,7 @@ namespace test1.Log4NetHelper
         /// <param name="message">message</param>
         public void Debug(Type source, string message)
         {
-            ILog logger = getLogger(source);
+            ILog logger = GetLogger(source);
             if (logger.IsDebugEnabled)
             {
                 logger.Debug(message);
@@ -74,7 +74,7 @@ namespace test1.Log4NetHelper
         /// <param name="message">message</param>
         public void Info(Type source, object message)
         {
-            ILog logger = getLogger(source);
+            ILog logger = GetLogger(source);
             if (logger.IsInfoEnabled)
             {
                 logger.Info(message);
@@ -96,7 +96,7 @@ namespace test1.Log4NetHelper
         /// <param name="message">message</param>
         public void Warn(Type source, object message)
         {
-            ILog logger = getLogger(source);
+            ILog logger = GetLogger(source);
             if (logger.IsWarnEnabled)
             {
                 logger.Warn(message);
@@ -118,7 +118,7 @@ namespace test1.Log4NetHelper
         /// <param name="message">message</param>
         public void Error(Type source, object message)
         {
-            ILog logger = getLogger(source);
+            ILog logger = GetLogger(source);
             if (logger.IsErrorEnabled)
             {
                 logger.Error(message);
@@ -140,7 +140,7 @@ namespace test1.Log4NetHelper
         /// <param name="message">message</param>
         public void Fatal(Type source, object message)
         {
-            ILog logger = getLogger(source);
+            ILog logger = GetLogger(source);
             if (logger.IsFatalEnabled)
             {
                 logger.Fatal(message);
@@ -166,7 +166,7 @@ namespace test1.Log4NetHelper
         /// <param name="exception">ex</param>
         public void Debug(Type source, object message, Exception exception)
         {
-            getLogger(source).Debug(message, exception);
+            GetLogger(source).Debug(message, exception);
         }
         /// <summary>
         /// 关键信息
@@ -186,7 +186,7 @@ namespace test1.Log4NetHelper
         /// <param name="exception">ex</param>
         public void Info(Type source, object message, Exception exception)
         {
-            getLogger(source).Info(message, exception);
+            GetLogger(source).Info(message, exception);
         }
         /// <summary>
         /// 警告信息
@@ -206,7 +206,7 @@ namespace test1.Log4NetHelper
         /// <param name="exception">ex</param>
         public void Warn(Type source, object message, Exception exception)
         {
-            getLogger(source).Warn(message, exception);
+            GetLogger(source).Warn(message, exception);
         }
         /// <summary>
         /// 错误信息
@@ -226,7 +226,7 @@ namespace test1.Log4NetHelper
         /// <param name="exception">ex</param>
         public void Error(Type source, object message, Exception exception)
         {
-            getLogger(source).Error(message, exception);
+            GetLogger(source).Error(message, exception);
         }
         /// <summary>
         /// 失败信息
@@ -246,7 +246,7 @@ namespace test1.Log4NetHelper
         /// <param name="exception">ex</param>
         public void Fatal(Type source, object message, Exception exception)
         {
-            getLogger(source).Fatal(message, exception);
+            GetLogger(source).Fatal(message, exception);
         }
     }
 }
