@@ -9,7 +9,7 @@ namespace WeChatPay
     {
         public const string SIGN_TYPE_MD5 = "MD5";
         public const string SIGN_TYPE_HMAC_SHA256 = "HMAC-SHA256";
-        //微信通讯数据格式变量必须根据ascii码顺序进行排序，使用排序dictionary可以排序
+        //微信通讯数据格式变量必须根据ascii码顺序进行排序，使用SortedDictionary进行排序
         private SortedDictionary<string, object> _keyValues = new SortedDictionary<string, object>();
         /// <summary>
         /// 设置变量值
