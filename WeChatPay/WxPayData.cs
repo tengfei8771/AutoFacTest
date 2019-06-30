@@ -7,8 +7,6 @@ namespace WeChatPay
 {
     public class WxPayData
     {
-        public const string SIGN_TYPE_MD5 = "MD5";
-        public const string SIGN_TYPE_HMAC_SHA256 = "HMAC-SHA256";
         //微信通讯数据格式变量必须根据ascii码顺序进行排序，使用SortedDictionary进行排序
         private SortedDictionary<string, object> _keyValues = new SortedDictionary<string, object>();
         /// <summary>
@@ -127,22 +125,37 @@ namespace WeChatPay
             string CompositeString = str + key;
             return CompositeString;
         }
-        public string MakeSign(string SignType)
+        /// <summary>
+        /// MD5加密算法
+        /// </summary>
+        /// <param name="CompositeString">参数字符串和秘钥字符串拼接而成的字符串</param>
+        /// <returns>MD5加密后的字符串</returns>
+        public string MD5Sign(string CompositeString)
         {
-            string result = string.Empty;
-            if(SignType== SIGN_TYPE_HMAC_SHA256)
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] bt = Encoding.UTF8.GetBytes(CompositeString);
+            byte[] bt1 = md5.ComputeHash(bt);
+            string byte2String = String.Empty;
+            foreach(byte b in bt1)
             {
-
+                byte2String += b.ToString("X2");
             }
+            return byte2String;
         }
-
-        public string SHA256(string str)
+        /// <summary>
+        /// 随机字符串生成方法
+        /// </summary>
+        /// <returns></returns>
+        public string GetRandomStr()
         {
-            byte[] SHA256Data = Encoding.UTF8.GetBytes(str);
-            SHA256Managed Sha256 = new SHA256Managed();
-            byte[] by = Sha256.ComputeHash(SHA256Data);
-            return BitConverter.ToString(by).Replace("-", "").ToLower();
+            const string conStr= @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            string randomStr = string.Empty;
+            Random rd = new Random();
+            for (int i = 0; i < conStr.Length; i++)
+            {
+                randomStr += conStr[rd.Next(0, conStr.Length)].ToString();
+            }
+            return randomStr;
         }
-
     }
 }
