@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.IServices;
+using WeChatPay;
 
 namespace test1.Controllers
 {
@@ -22,6 +23,14 @@ namespace test1.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
+            //WxPayData wx = new WxPayData();
+            //wx.SetValue("name", "小王");
+            //wx.SetValue("age", "15");
+            //string str=wx.GetRandomStr();
+            //wx.SetValue("sec", str);
+            //wx.SetSignValue();
+            //string xml = wx.DicToXml();
+            //wx.XmlToDic(xml);
             return Ok(_services.dosomething());
         }
     }

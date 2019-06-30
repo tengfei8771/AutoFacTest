@@ -26,7 +26,8 @@ namespace WeChatPay
         /// <returns>键值</returns>
         public object GetValue(string Key)
         {
-            object t = _keyValues.TryGetValue(Key, out t);
+            object t = null;
+            _keyValues.TryGetValue(Key, out t);
             return t;
         }
         /// <summary>
@@ -37,7 +38,7 @@ namespace WeChatPay
         public bool IsSet(string Key)
         {
             object t = null;
-            t = _keyValues.TryGetValue(Key, out t);
+            _keyValues.TryGetValue(Key, out t);
             if (t != null)
             {
                 return true;
@@ -56,7 +57,7 @@ namespace WeChatPay
             string xml = "<xml>";
             if (_keyValues.Count == 0)
             {
-                throw new Exception("dic内不能为空！");
+                throw new WxPayException("dic内不能为空！");
             }
             else
             {
@@ -64,7 +65,7 @@ namespace WeChatPay
                 {
                     if (PairAndValue.Value == null)
                     {
-                        throw new Exception("不能为空值!");
+                        throw new WxPayException("不能为空值!");
                     }
                     else
                     {
@@ -78,7 +79,7 @@ namespace WeChatPay
                         }
                         else
                         {
-                            throw new Exception("只能包含int或者string类型的数据");
+                            throw new WxPayException("只能包含int或者string类型的数据");
                         }
                     }
                 }
@@ -87,6 +88,17 @@ namespace WeChatPay
             }
         }
 
+        public void SetSignValue()
+        {
+            if (IsSet("sign"))
+            {
+                throw new WxPayException("已有签名字段!");
+            }
+            else
+            {
+                SetValue("sign", MD5Sign(SecretStr(DicToUrl())));
+            }
+        }
 
         public SortedDictionary<string,object> XmlToDic(string XMLstring)
         {
@@ -96,22 +108,23 @@ namespace WeChatPay
             XmlNodeList list = FirstNode.ChildNodes;
             foreach(XmlNode node in list)
             {
-                _keyValues[node.Name] = node.Value;
+                _keyValues[node.Name] = node.InnerText;
             }
             try
             {
-                if (_keyValues["return_code"].ToString() != "SUCCESS")
+                if (CheckSign())
                 {
                     return _keyValues;
                 }
-
-
+                else
+                {
+                    throw new WxPayException("sign字段认证失败!");
+                }
             }
             catch(WxPayException e)
             {
                 throw new WxPayException(e.Message);
             }
-            return _keyValues;
 
         }
 
@@ -124,11 +137,21 @@ namespace WeChatPay
             else
             {
                 //if (GetValue("sign") == null || GetValue("sign") == "")
-                if (string.IsNullOrEmpty((string)GetValue("sign")))
+                if (string.IsNullOrEmpty(GetValue("sign").ToString()))
                 {
                     throw new WxPayException("返回数据签名存在但是为空!");
                 }
-                string sign = GetValue("sing").ToString();
+                string sign = GetValue("sign").ToString();
+                _keyValues.Remove("sign");
+                string MD5Str = MD5Sign(SecretStr(DicToUrl()));
+                if(sign== MD5Str)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
             }
         }
@@ -202,7 +225,7 @@ namespace WeChatPay
             const string conStr= @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             string randomStr = string.Empty;
             Random rd = new Random();
-            for (int i = 0; i < conStr.Length; i++)
+            for (int i = 0; i < conStr.Length/2; i++)
             {
                 randomStr += conStr[rd.Next(0, conStr.Length)].ToString();
             }

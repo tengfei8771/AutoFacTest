@@ -11,7 +11,7 @@ namespace WeChatPay
 
         public string mchid = "";//商户号
 
-        public string key = "";//商户API密钥
+        public string key = "aaaaa";//商户API密钥
 
         public string appSecret = "";//公众号支付和app支付时候将用到
 

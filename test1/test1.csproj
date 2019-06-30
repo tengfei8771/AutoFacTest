@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\Until\Until.csproj" />
+    <ProjectReference Include="..\WeChatPay\WeChatPay.csproj" />
   </ItemGroup>
 
   <ItemGroup>
