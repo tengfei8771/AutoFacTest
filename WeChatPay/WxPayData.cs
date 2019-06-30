@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 
 namespace WeChatPay
 {
@@ -47,7 +48,7 @@ namespace WeChatPay
             }
         }
         /// <summary>
-        /// 将dic类型数据转成xml字符串
+        /// 将Dic类型数据转成xml字符串
         /// </summary>
         /// <returns>xml字符串</returns>
         public string DicToXml()
@@ -85,6 +86,52 @@ namespace WeChatPay
                 return xml;
             }
         }
+
+
+        public SortedDictionary<string,object> XmlToDic(string XMLstring)
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(XMLstring);
+            XmlNode FirstNode = xml.FirstChild;
+            XmlNodeList list = FirstNode.ChildNodes;
+            foreach(XmlNode node in list)
+            {
+                _keyValues[node.Name] = node.Value;
+            }
+            try
+            {
+                if (_keyValues["return_code"].ToString() != "SUCCESS")
+                {
+                    return _keyValues;
+                }
+
+
+            }
+            catch(WxPayException e)
+            {
+                throw new WxPayException(e.Message);
+            }
+            return _keyValues;
+
+        }
+
+        public bool CheckSign()
+        {
+            if (!IsSet("sign"))
+            {
+                throw new WxPayException("返回格式数据未签名!");
+            }
+            else
+            {
+                //if (GetValue("sign") == null || GetValue("sign") == "")
+                if (string.IsNullOrEmpty((string)GetValue("sign")))
+                {
+                    throw new WxPayException("返回数据签名存在但是为空!");
+                }
+                string sign = GetValue("sing").ToString();
+
+            }
+        }
         /// <summary>
         /// 将字典键值转化为url格式
         /// </summary>
@@ -117,12 +164,16 @@ namespace WeChatPay
             }
             return str; 
         }
-
+        /// <summary>
+        /// 将key和URL格式的进行拼接
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public string SecretStr(string str)
         {
             WxPayConfig wxPayConfig = new WxPayConfig();
             string key = wxPayConfig.key;
-            string CompositeString = str + key;
+            string CompositeString = str +"&" +key;
             return CompositeString;
         }
         /// <summary>
