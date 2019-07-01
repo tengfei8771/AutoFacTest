@@ -8,7 +8,6 @@ namespace WeChatPay
 {
     public class WxPayData
     {
-        //微信通讯数据格式变量必须根据ascii码顺序进行排序，使用SortedDictionary进行排序
         private SortedDictionary<string, object> _keyValues = new SortedDictionary<string, object>();
         /// <summary>
         /// 设置变量值
@@ -96,7 +95,8 @@ namespace WeChatPay
             }
             else
             {
-                SetValue("sign", MD5Sign(SecretStr(DicToUrl())));
+                SetValue("nonce_str", GetRandomStr());
+                SetValue("sign", MD5Sign(SecretStr(DicToUrl())));  
             }
         }
 
@@ -108,7 +108,7 @@ namespace WeChatPay
             XmlNodeList list = FirstNode.ChildNodes;
             foreach(XmlNode node in list)
             {
-                _keyValues[node.Name] = node.InnerText;
+                SetValue(node.Name, node.InnerText);
             }
             try
             {
@@ -136,8 +136,7 @@ namespace WeChatPay
             }
             else
             {
-                //if (GetValue("sign") == null || GetValue("sign") == "")
-                if (string.IsNullOrEmpty(GetValue("sign").ToString()))
+                if (GetValue("sign") == null || GetValue("sign").ToString() == "")
                 {
                     throw new WxPayException("返回数据签名存在但是为空!");
                 }
