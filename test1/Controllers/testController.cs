@@ -21,17 +21,10 @@ namespace test1.Controllers
             _services = services;
         }
         [HttpGet("Index")]
+        [Obsolete]
         public IActionResult Index()
         {
-            //WxPayData wx = new WxPayData();
-            //wx.SetValue("name", "小王");
-            //wx.SetValue("age", "15");
-            //string str=wx.GetRandomStr();
-            //wx.SetValue("sec", str);
-            //wx.SetSignValue();
-            //string xml = wx.DicToXml();
-            //wx.XmlToDic(xml);
-            string str = WxUntil.GetCpuInfo();
+            string str=WxUntil.GetTimeSpan();
             return Ok(_services.dosomething());
         }
     }

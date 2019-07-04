@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management;
 using System.Net;
 using System.Text;
 
 namespace WeChatPay
 {
-    public class WxUntil
+    public static class WxUntil
     {
         /// <summary>
         /// 生成随机字符串
@@ -48,16 +50,21 @@ namespace WeChatPay
             }
         }
 
-        [Obsolete]
-        public static string GetIPAdress()
+        public static string GetIPAdress(this HttpContext context)
         {
-            string strHostName = Dns.GetHostName(); //得到本机的主机名
-
-            IPHostEntry ipEntry = Dns.GetHostByName(strHostName); //取得本机IP
-
-            string strAddr = ipEntry.AddressList[0].ToString();
-            return (strAddr);
+            var ip = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = context.Connection.RemoteIpAddress.ToString();
+            }
+            return ip;
         }
 
+        public static string GetTimeSpan(double Min=0)
+        {
+            DateTime dt = DateTime.UtcNow.AddMinutes(Min);
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
     }
 }

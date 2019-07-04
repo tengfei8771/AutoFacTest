@@ -112,14 +112,26 @@ namespace WeChatPay
             }
             try
             {
-                if (CheckSign())
+                if(_keyValues["return_code"].ToString()== "SUCCESS")
                 {
-                    return _keyValues;
+                    if (CheckSign())
+                    {
+                        return _keyValues;
+                    }
+                    else
+                    {
+                        throw new WxPayException("验证失败！");
+                    }
+                }
+                else if(_keyValues["return_code"].ToString() == "FAIL")
+                {
+                    throw new WxPayException(_keyValues["err_code"].ToString()+ _keyValues["err_code_des"].ToString());
                 }
                 else
                 {
-                    throw new WxPayException("sign字段认证失败!");
+                    throw new WxPayException("未知错误！");
                 }
+                
             }
             catch(WxPayException e)
             {
@@ -193,8 +205,7 @@ namespace WeChatPay
         /// <returns></returns>
         public string SecretStr(string str)
         {
-            WxPayConfig wxPayConfig = new WxPayConfig();
-            string key = wxPayConfig.key;
+            string key = WxPayConfig.key;
             string CompositeString = str +"&" +key;
             return CompositeString;
         }
