@@ -95,7 +95,7 @@ namespace WeChatPay
             }
             else
             {
-                SetValue("nonce_str", GetRandomStr());
+                SetValue("nonce_str", WxUntil.GetRandomStr());
                 SetValue("sign", MD5Sign(SecretStr(DicToUrl())));  
             }
         }
@@ -214,21 +214,6 @@ namespace WeChatPay
                 byte2String += b.ToString("X2");
             }
             return byte2String;
-        }
-        /// <summary>
-        /// 随机字符串生成方法
-        /// </summary>
-        /// <returns></returns>
-        public string GetRandomStr()
-        {
-            const string conStr= @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            string randomStr = string.Empty;
-            Random rd = new Random();
-            for (int i = 0; i < conStr.Length/2; i++)
-            {
-                randomStr += conStr[rd.Next(0, conStr.Length)].ToString();
-            }
-            return randomStr;
         }
     }
 }

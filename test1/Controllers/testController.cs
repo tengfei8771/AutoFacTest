@@ -31,6 +31,7 @@ namespace test1.Controllers
             //wx.SetSignValue();
             //string xml = wx.DicToXml();
             //wx.XmlToDic(xml);
+            string str = WxUntil.GetCpuInfo();
             return Ok(_services.dosomething());
         }
     }
