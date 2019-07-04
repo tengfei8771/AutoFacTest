@@ -24,7 +24,8 @@ namespace test1.Controllers
         [Obsolete]
         public IActionResult Index()
         {
-            string str=WxUntil.GetTimeSpan();
+            string str=WxUntil.GetTimeSpan(0);
+            string str1 = WxUntil.GetTimeSpan(30);
             return Ok(_services.dosomething());
         }
     }
