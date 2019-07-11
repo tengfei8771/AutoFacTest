@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\Until\Until.csproj" />
     <ProjectReference Include="..\WeChatPay\WeChatPay.csproj" />
+    <ProjectReference Include="..\WeChatPlatform\WeChatPlatform.csproj" />
   </ItemGroup>
 
   <ItemGroup>
