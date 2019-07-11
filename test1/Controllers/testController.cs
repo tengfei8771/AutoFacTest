@@ -11,6 +11,7 @@ using Services.IServices;
 using test1.Module;
 using WeChatPay;
 using WeChatPlatform.API;
+using WeChatPlatform.Config;
 
 namespace test1.Controllers
 {
@@ -27,35 +28,36 @@ namespace test1.Controllers
         [Obsolete]
         public IActionResult Index()
         {
-            Token token = new Token();
-            API api = new API();
-            //string str=WxUntil.GetTimeSpan(0);
-            //string str1 = WxUntil.GetTimeSpan(30);
-            //string str2 = token.GetToken();
-            //string str3 = api.GetIP();
-            string data= @"{
-	'User': {
+            #region 消息推送接口测试方法
+            //MsgAPI api = new MsgAPI();
+            //string data= @"{
+	           //                 'User': {
 
-        'name': 'Bill',
-		'color': '#173177'
+            //                        'name': 'Bill',
+		          //                  'color': '#173177'
 
-    },
-	'Prod': {
-		'name': 'A-202',
-		'color': '#173177'
-	},
-	'Date': {
-		'time': '5',
-		'color': '#173177'
-	},
-	'Money': {
-		'value': '500000',
-		'color': 'red'
-	}
-}";
-            JObject obj = JObject.Parse(data);
-            string str4 = api.SendTemplateMsg("oaleEuK_SDBBqhpcE6nrehfSaGWg", "2NNRnl0Er7LZSOfWf0BKrsA3uwzXFDD4yRzQkrEJfJg", obj);
+            //                    },
+	           //                 'Prod': {
+		          //                  'name': 'A-202',
+		          //                  'color': '#173177'
+	           //                 },
+	           //                 'Date': {
+		          //                  'time': '5',
+		          //                  'color': '#173177'
+	           //                 },
+	           //                 'Money': {
+		          //                  'value': '500000',
+		          //                  'color': 'red'
+	           //                 }
+            //                }";
+            //JObject obj = JObject.Parse(data);
+            //string str4 = api.SendTemplateMsg("oaleEuK_SDBBqhpcE6nrehfSaGWg", "JQTqZkBKJkc11dDkCf0g2MrAL3scoF2XcEJujm8fe_0", obj,UserConfig.appid);
             //string str4 = api.GetTemplateList();
+            #endregion
+            #region 用户信息获取测试方法
+            UserInfoAPI userInfo = new UserInfoAPI();
+            string str4 = userInfo.GetUserList();
+            #endregion
 
             return Ok(str4);
             //return Ok(_services.dosomething());

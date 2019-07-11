@@ -13,7 +13,7 @@ namespace WeChatPlatform.API
         /// 获取Token方法
         /// </summary>
         /// <returns>返回值</returns>
-        public string GetToken()
+        public static string GetToken()
         {
             string url = "https://" + UrlConfig.BaseApiURL + UrlConfig.TokenURL + "grant_type=client_credential&appid=" + UserConfig.appid + "&secret=" + UserConfig.secret;
             RequestHelper request = new RequestHelper();
@@ -25,6 +25,7 @@ namespace WeChatPlatform.API
                 throw new Exception(errmsg);
             }
             UserConfig.token = obj["access_token"].ToString();
+            UserConfig.expireTime = Until.GetTimeSpan(119);
             return response;
         }
 
