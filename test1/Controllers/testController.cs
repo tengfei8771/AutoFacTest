@@ -25,7 +25,6 @@ namespace test1.Controllers
             _services = services;
         }
         [HttpGet("Index")]
-        [Obsolete]
         public IActionResult Index()
         {
             #region 消息推送接口测试方法
@@ -56,7 +55,7 @@ namespace test1.Controllers
             #endregion
             #region 用户信息获取测试方法
             UserInfoAPI userInfo = new UserInfoAPI();
-            string str4 = userInfo.GetUserList();
+            var str4 = userInfo.GetUserList();
             #endregion
 
             return Ok(str4);

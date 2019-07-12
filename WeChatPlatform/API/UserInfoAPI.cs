@@ -29,7 +29,11 @@ namespace WeChatPlatform.API
             }
 
         }
-
+        /// <summary>
+        /// 添加标签
+        /// </summary>
+        /// <param name="TagName">标签名</param>
+        /// <returns>返回内容</returns>
         public string CreateUserTag(string TagName)
         {
             string url = Until.CreateUrl(UrlConfig.CreateUserTag);

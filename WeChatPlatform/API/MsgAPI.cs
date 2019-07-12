@@ -23,7 +23,7 @@ namespace WeChatPlatform.API
                 string errmsg = obj["errmsg"].ToString();
                 throw new Exception(errmsg);
             }
-            UserConfig.token = obj["access_token"].ToString();
+            
             return response;
         }
 

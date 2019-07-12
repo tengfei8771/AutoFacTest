@@ -26,7 +26,17 @@ namespace WeChatPlatform.Config
         #endregion
         #region 用户信息URL
         public static readonly string GetUserList = "cgi-bin/user/get?access_token=";//获取用户list
-        public static readonly string CreateUserTag = "cgi-bin/tags/create?access_token=";//创建用户管理tag
         #endregion
+        #region 用户标签
+        public static readonly string CreateUserTag = "cgi-bin/tags/create?access_token=";//创建用户管理tag
+        public static readonly string GetUserTag = "cgi-bin/tags/get? access_token=";//获取用户标签
+        public static readonly string EditUserTag = "cgi-bin/tags/update?access_token=";//编辑用户标签
+        public static readonly string DelUserTag = "cgi-bin/tags/delete?access_token=";//删除用户标签
+        public static readonly string GetFansList = "cgi-bin/user/tag/get?access_token=";//获取粉丝列表
+        public static readonly string SetUserTag = "tags/members/batchtagging?access_token=";//批量为用户打标签
+        public static readonly string CancelUserTag = "cgi-bin/tags/members/batchuntagging?access_token=";//批量取消用户标签
+        public static readonly string GetUserTagList = "cgi-bin/tags/getidlist?access_token=";//获取用户身上的标签列表
+        #endregion
+
     }
 }
