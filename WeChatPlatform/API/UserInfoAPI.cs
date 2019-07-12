@@ -9,7 +9,7 @@ namespace WeChatPlatform.API
     public class UserInfoAPI
     {
         /// <summary>
-        /// 获取关注本公众号内前10000个人的openid
+        /// 获取关注本公众号内前10000个人的openid,超过10000万人递归拼接成一条完整的消息
         /// </summary>
         /// <param name="openid">从哪个人开始查询，可不填</param>
         /// <returns></returns>
@@ -21,7 +21,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
@@ -42,7 +42,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
@@ -63,7 +63,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
             }
             else
             {
@@ -79,7 +79,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
             }
             else
             {
