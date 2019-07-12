@@ -21,7 +21,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
+                throw new Exception(errMsg.GetErrMsg((int)obj["errcode"]));
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
@@ -42,7 +42,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
+                throw new Exception(errMsg.GetErrMsg((int)obj["errcode"]));
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
@@ -63,7 +63,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
+                throw new Exception(errMsg.GetErrMsg((int)obj["errcode"]));
             }
             else
             {
@@ -79,7 +79,7 @@ namespace WeChatPlatform.API
             JObject obj = JObject.Parse(response);
             if (response.Contains("errcode"))
             {
-                throw new Exception(obj["errcode"].ToString() + obj["errmsg"].ToString());
+                throw new Exception(errMsg.GetErrMsg((int)obj["errcode"]));
             }
             else
             {
