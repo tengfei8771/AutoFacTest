@@ -23,11 +23,32 @@ namespace WeChatPlatform.API
             {
                 throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
             }
+            if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
+            {
+                GetUserChildrenList(obj["next_openid"].ToString(), obj["data"].ToString());
+                return obj.ToString();
+            }
             else
             {
-                return response;
+                return obj.ToString();
             }
+        }
 
+        public void GetUserChildrenList(string openid,string UserList)
+        {
+            string url = Until.CreateUrl(UrlConfig.GetUserList) + "&next_openid=" + openid;
+            RequestHelper request = new RequestHelper();
+            string response = request.GetResponseString(request.CreateGetHttpResponse(url));
+            JObject obj = JObject.Parse(response);
+            if (response.Contains("errcode"))
+            {
+                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+            }
+            if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
+            {
+                UserList += obj["data"].ToString();
+                GetUserChildrenList(obj["next_openid"].ToString(), UserList);
+            }
         }
         /// <summary>
         /// 添加标签
@@ -49,5 +70,22 @@ namespace WeChatPlatform.API
                 return response;
             }
         }
+
+        public string GetUserTag()
+        {
+            string url = Until.CreateUrl(UrlConfig.GetUserTag);
+            RequestHelper request = new RequestHelper();
+            string response = request.GetResponseString(request.CreateGetHttpResponse(url));
+            JObject obj = JObject.Parse(response);
+            if (response.Contains("errcode"))
+            {
+                throw new Exception(obj["errcode"].ToString() + obj["rrmsg"].ToString());
+            }
+            else
+            {
+                return response;
+            }
+        }
+
     }
 }

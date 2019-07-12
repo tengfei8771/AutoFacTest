@@ -28,36 +28,35 @@ namespace test1.Controllers
         public IActionResult Index()
         {
             #region 消息推送接口测试方法
-            //MsgAPI api = new MsgAPI();
-            //string data= @"{
-	           //                 'User': {
+            MsgAPI api = new MsgAPI();
+            string data = @"{
+                             'User': {
 
-            //                        'name': 'Bill',
-		          //                  'color': '#173177'
+                                    'value': 'Bill',
+                              'color': '#173177'
 
-            //                    },
-	           //                 'Prod': {
-		          //                  'name': 'A-202',
-		          //                  'color': '#173177'
-	           //                 },
-	           //                 'Date': {
-		          //                  'time': '5',
-		          //                  'color': '#173177'
-	           //                 },
-	           //                 'Money': {
-		          //                  'value': '500000',
-		          //                  'color': 'red'
-	           //                 }
-            //                }";
-            //JObject obj = JObject.Parse(data);
-            //string str4 = api.SendTemplateMsg("oaleEuK_SDBBqhpcE6nrehfSaGWg", "JQTqZkBKJkc11dDkCf0g2MrAL3scoF2XcEJujm8fe_0", obj,UserConfig.appid);
-            //string str4 = api.GetTemplateList();
+                                },
+                             'Prod': {
+                              'value': 'A-202',
+                              'color': '#173177'
+                             },
+                             'Date': {
+                              'value': '5',
+                              'color': '#173177'
+                             },
+                             'Money': {
+                              'value': '500000',
+                              'color': 'red'
+                             }
+                            }";
+            JObject obj = JObject.Parse(data);
+            string str4 = api.SendTemplateMsg("oaleEuK_SDBBqhpcE6nrehfSaGWg", "s11wtORaOEKO_BLL4Kd7OrAynTzO5KNCvQPvOAwvJu0", obj, UserConfig.appid);
             #endregion
             #region 用户信息获取测试方法
-            UserInfoAPI userInfo = new UserInfoAPI();
-            var str4 = userInfo.GetUserList();
+            //UserInfoAPI userInfo = new UserInfoAPI();
+            //var str4 = userInfo.GetUserList();
             #endregion
-
+            //string str = Token.GetToken();
             return Ok(str4);
             //return Ok(_services.dosomething());
         }
