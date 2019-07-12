@@ -25,7 +25,8 @@ namespace WeChatPlatform.API
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
-                GetUserChildrenList(obj["next_openid"].ToString(), obj["data"].ToString());
+                JArray UserList = JArray.Parse(obj["openid"].ToString());
+                GetUserChildrenList(obj["next_openid"].ToString(), UserList);
                 return obj.ToString();
             }
             else
@@ -34,7 +35,7 @@ namespace WeChatPlatform.API
             }
         }
 
-        public void GetUserChildrenList(string openid,string UserList)
+        public void GetUserChildrenList(string openid, JArray UserList)
         {
             string url = Until.CreateUrl(UrlConfig.GetUserList) + "&next_openid=" + openid;
             RequestHelper request = new RequestHelper();
@@ -46,7 +47,11 @@ namespace WeChatPlatform.API
             }
             if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
             {
-                UserList += obj["data"].ToString();
+                JArray UserChildrenList = JArray.Parse(obj["openid"].ToString());
+                foreach(var item in UserChildrenList)
+                {
+                    UserList.Add(item);
+                }
                 GetUserChildrenList(obj["next_openid"].ToString(), UserList);
             }
         }
