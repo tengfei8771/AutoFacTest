@@ -117,5 +117,14 @@ namespace WeChatPay
             TimeSpan ts = DateTime.Now.AddMinutes(Min).ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
+        /// <summary>
+        /// 获取时间字符串
+        /// </summary>
+        /// <param name="min">过期时间</param>
+        /// <returns></returns>
+        public static string GetNowStr(double min=0)
+        {
+            return DateTime.Now.AddMinutes(min).ToString("yyyyMMddhhmmss");
+        }
     }
 }
