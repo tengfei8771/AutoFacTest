@@ -16,7 +16,7 @@ namespace WeChatPay
         /// </summary>
         /// <param name="url">请求网址</param>
         /// <param name="XMLString">xml格式数据</param>
-        /// <returns></returns>
+        /// <returns>返回</returns>
         public static string GetPostFinallyStr(string url, string XMLString)
         {
             return GetResponseStr(CreateWxPayRequest(url, XMLString));
