@@ -44,9 +44,19 @@ namespace WeChatPay.WxApi
             switch (type)
             {
                 case 0:
+                    if (String.IsNullOrEmpty(openid))
+                    {
+                        throw new Exception("当支付类型为JSAPI时，openID不能为空");
+                    }
+                    wd.SetValue("openid", openid);
                     wd.SetValue("trade_type", "JSAPI");
                     break;
                 case 1:
+                    if (String.IsNullOrEmpty(prodID))
+                    {
+                        throw new Exception("当支付类型为NATIVE时，prodNo不能为空!");
+                    }
+                    wd.SetValue("product_id", prodID);
                     wd.SetValue("trade_type", "NATIVE");
                     break;
                 case 2:
@@ -58,27 +68,13 @@ namespace WeChatPay.WxApi
                 default:
                     throw new Exception("您输入的支付方式代码有误!");
             }
-            if (type == 1)
+            if (!String.IsNullOrEmpty(openid))
             {
-                if (!String.IsNullOrEmpty(prodID))
-                {
-                    wd.SetValue("product_id", prodID);
-                }
-                else
-                {
-                    throw new Exception("当支付类型为NATIVE时，prodNo不能为空!");
-                }
+                wd.SetValue("openid", openid);
             }
-            else if (type == 0)
+            if (!String.IsNullOrEmpty(prodID))
             {
-                if (!String.IsNullOrEmpty(openid))
-                {
-                    wd.SetValue("openid",openid);
-                }
-                else
-                {
-                    throw new Exception("当支付类型为JSAPI时，openID不能为空");
-                }
+                wd.SetValue("product_id", prodID);
             }
             if (limit)
             {
