@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -11,11 +12,61 @@ namespace WeChatPay
     public static class WxUntil
     {
         /// <summary>
+        /// 发送POST请求并解析返回值
+        /// </summary>
+        /// <param name="url">请求网址</param>
+        /// <param name="XMLString">xml格式数据</param>
+        /// <returns></returns>
+        public static string GetPostFinallyStr(string url, string XMLString)
+        {
+            return GetResponseStr(CreateWxPayRequest(url, XMLString));
+        }
+        /// <summary>
+        /// 发起微信POST请求
+        /// </summary>
+        /// <param name="url">发起请求的网址</param>
+        /// <param name="XMLString">XML字符串</param>
+        /// <returns>返回response</returns>
+        public static HttpWebResponse CreateWxPayRequest(string url,string XMLString)
+        {
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Method = "post";
+            request.ContentType = "application / x - www - form - urlencoded";
+            if (XMLString != null && XMLString != "")
+            {
+                byte[] data = Encoding.UTF8.GetBytes(XMLString);
+                using(Stream s = request.GetRequestStream())
+                {
+                    s.Write(data, 0, data.Length);
+                }
+                return request.GetResponse() as HttpWebResponse;
+
+            }
+            else
+            {
+                throw new Exception("请输入xml数据!");
+            }
+        }
+
+        /// <summary>
+        /// 解析返回的response
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static string GetResponseStr(HttpWebResponse response)
+        {
+            using (Stream s = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(s, Encoding.UTF8);
+                return reader.ReadToEnd();
+            }
+        }
+        /// <summary>
         /// 生成随机字符串
         /// </summary>
         /// <returns>随机字符串</returns>
         public static string GetRandomStr()
-        {
+        { 
             const string conStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             string randomStr = string.Empty;
             Random rd = new Random();
