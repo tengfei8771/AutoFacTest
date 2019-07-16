@@ -53,6 +53,7 @@ namespace WeChatPay
         /// <returns>xml字符串</returns>
         public string DicToXml()
         {
+            //SetValue("sign", MD5Sign(SecretStr(DicToUrl())));
             string xml = "<xml>";
             if (_keyValues.Count == 0)
             {
@@ -154,8 +155,8 @@ namespace WeChatPay
                 }
                 string sign = GetValue("sign").ToString();
                 _keyValues.Remove("sign");
-                string MD5Str = MD5Sign(SecretStr(DicToUrl()));
-                if(sign== MD5Str)
+                string MD5Str = MakeSign();
+                if (sign== MD5Str)
                 {
                     return true;
                 }
@@ -225,6 +226,11 @@ namespace WeChatPay
                 byte2String += b.ToString("X2");
             }
             return byte2String;
+        }
+
+        public string MakeSign()
+        {
+            return MD5Sign(SecretStr(DicToUrl()));
         }
     }
 }

@@ -17,6 +17,11 @@ namespace WeChatPay
 
         public static string notify_url = "http://www.baidu.com/Pay/WxNotify";//回调页地址
 
-        public static string api_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信支付调用接口地址
+        
+        public static string BaseUrl = "https://api.mch.weixin.qq.com";
+        public static string BaseUrl2 = "https://api2.mch.weixin.qq.com";
+        public static string WxPay = "/pay/unifiedorder";//微信支付调用接口地址
+        public static string OrderQuery = "/pay/orderquery";//订单查询接口
+        public static string CloseOrder = "/pay/closeorder";//关闭订单接口
     }
 }

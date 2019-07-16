@@ -34,7 +34,7 @@ namespace WeChatPay.WxApi
             wd.SetValue("mch_id", WxPayConfig.mchid);//商户号appid
             wd.SetValue("device_info", "Web");//设备号
             wd.SetValue("nonce_str", WxUntil.GetRandomStr());//随机字符串
-            wd.SetValue("sign_type", "MD5");//签名类型
+            //wd.SetValue("sign_type", "MD5");//签名类型
             wd.SetValue("fee_type", "CNY");//货币种类
             wd.SetValue("body", body);//商品描述
             wd.SetValue("out_trade_no", tradeNo);//系统内部生成的订单号
@@ -108,8 +108,40 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("detail", attach);
             }
-            return WxUntil.GetPostFinallyStr(WxPayConfig.api_url, wd.DicToXml());
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl+WxPayConfig.WxPay, wd.DicToXml());
+        }
 
+        public string QueryOrder(string transaction_id = null, string out_trade_no = null)
+        {
+            WxPayData wd = new WxPayData();
+            wd.SetValue("appid", WxPayConfig.appid);
+            wd.SetValue("mch_id", WxPayConfig.mchid);
+            if (String.IsNullOrEmpty(transaction_id) && String.IsNullOrEmpty(out_trade_no))
+            {
+                throw new Exception("商家订单号和微信订单号不能同时为空!");
+            }
+            if (String.IsNullOrEmpty(transaction_id))
+            {
+                wd.SetValue("transaction_id", transaction_id);
+            }
+            else
+            {
+                wd.SetValue("out_trade_no", out_trade_no );
+            }
+            wd.SetValue("nonce_str", WxUntil.GetRandomStr());
+            wd.SetValue("sign", wd.MakeSign());
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.OrderQuery, wd.DicToXml());
+        }
+
+        public string CloseOrder(string out_trade_no)
+        {
+            WxPayData wd = new WxPayData();
+            wd.SetValue("appid", WxPayConfig.appid);
+            wd.SetValue("mch_id", WxPayConfig.mchid);
+            wd.SetValue("out_trade_no", out_trade_no);
+            wd.SetValue("nonce_str", WxUntil.GetRandomStr());
+            wd.SetValue("sign", wd.MakeSign());
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.CloseOrder,wd.DicToXml());
 
         }
 
