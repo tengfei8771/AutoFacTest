@@ -32,7 +32,7 @@ namespace WeChatPay
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "post";
             request.ContentType = "application / x - www - form - urlencoded";
-            if (XMLString != null && XMLString != "")
+            if (!String.IsNullOrEmpty(XMLString))
             {
                 byte[] data = Encoding.UTF8.GetBytes(XMLString);
                 using(Stream s = request.GetRequestStream())
