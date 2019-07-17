@@ -32,11 +32,13 @@ namespace WeChatPay
             return true;
         }
         /// <summary>
-        /// 发起微信POST请求
+        /// 发起post请求
         /// </summary>
-        /// <param name="url">发起请求的网址</param>
-        /// <param name="XMLString">XML字符串</param>
-        /// <returns>返回response</returns>
+        /// <param name="url">发起请求的url</param>
+        /// <param name="XMLString">xml数据</param>
+        /// <param name="timeout">响应过期时间，默认10秒</param>
+        /// <param name="isUseCert">https是否使用证书认证</param>
+        /// <returns></returns>
         public static HttpWebResponse CreateWxPayRequest(string url,string XMLString,int timeout=10,bool isUseCert=true)
         {
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;

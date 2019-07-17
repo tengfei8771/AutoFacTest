@@ -229,6 +229,22 @@ namespace WeChatPay
             return byte2String;
         }
 
+        public string SHA256(string CompositeString)
+        {
+            byte[] msg = Encoding.UTF8.GetBytes(CompositeString);
+            byte[] key = Encoding.UTF8.GetBytes(WxPayConfig.key);
+            string byte2String = String.Empty;
+            using (HMACSHA256 h=new HMACSHA256(key))
+            {
+                byte[] hash = h.ComputeHash(msg);
+                foreach (byte b in hash)
+                {
+                    byte2String += b.ToString("X2");
+                }
+                return byte2String;
+            }              
+        }
+
         public string MakeSign()
         {
             return MD5Sign(SecretStr(DicToUrl()));
