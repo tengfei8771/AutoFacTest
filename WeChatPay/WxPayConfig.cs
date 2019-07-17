@@ -25,5 +25,6 @@ namespace WeChatPay
         public static readonly string CloseOrder = "/pay/closeorder";//关闭订单接口
         public static readonly string Refund = "/secapi/pay/refund";//退款接口
         public static readonly string RefundQuery = "/secapi/pay/refundquery";//退款查询接口
+        public static readonly string DownloadBill = "pay/downloadbill";//下载对账单接口
     }
 }

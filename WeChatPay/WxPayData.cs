@@ -103,6 +103,7 @@ namespace WeChatPay
 
         public SortedDictionary<string,object> XmlToDic(string XMLstring)
         {
+            SortedDictionary<string,object> res=new SortedDictionary<string, object>();
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(XMLstring);
             XmlNode FirstNode = xml.FirstChild;
@@ -115,9 +116,9 @@ namespace WeChatPay
             {
                 if(_keyValues["return_code"].ToString()== "SUCCESS")
                 {
-                    if (CheckSign())
+                    if (CheckSign(res))
                     {
-                        return _keyValues;
+                        return res;
                     }
                     else
                     {
@@ -126,7 +127,7 @@ namespace WeChatPay
                 }
                 else if(_keyValues["return_code"].ToString() == "FAIL")
                 {
-                    throw new WxPayException(_keyValues["err_code"].ToString()+ _keyValues["err_code_des"].ToString());
+                    throw new WxPayException(res["err_code"].ToString()+ res["err_code_des"].ToString());
                 }
                 else
                 {
@@ -141,20 +142,20 @@ namespace WeChatPay
 
         }
 
-        public bool CheckSign()
+        public bool CheckSign(SortedDictionary<string,object> res)
         {
-            if (!IsSet("sign"))
+            if (!res.ContainsKey("sign"))
             {
                 throw new WxPayException("返回格式数据未签名!");
             }
             else
             {
-                if (GetValue("sign") == null || GetValue("sign").ToString() == "")
+                if (res["sign"]==null||res["sign"].ToString()=="")
                 {
                     throw new WxPayException("返回数据签名存在但是为空!");
                 }
-                string sign = GetValue("sign").ToString();
-                _keyValues.Remove("sign");
+                string sign = res["sign"].ToString();
+                res.Remove("sign");
                 string MD5Str = MakeSign();
                 if (sign== MD5Str)
                 {
@@ -221,7 +222,7 @@ namespace WeChatPay
             byte[] bt = Encoding.UTF8.GetBytes(CompositeString);
             byte[] bt1 = md5.ComputeHash(bt);
             string byte2String = String.Empty;
-            foreach(byte b in bt1)
+            foreach(byte b in bt1) 
             {
                 byte2String += b.ToString("X2");
             }

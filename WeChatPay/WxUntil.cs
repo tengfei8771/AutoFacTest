@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace WeChatPay
@@ -21,17 +23,42 @@ namespace WeChatPay
         {
             return GetResponseStr(CreateWxPayRequest(url, XMLString));
         }
+
+        public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            //直接确认，否则打不开    
+            return true;
+        }
         /// <summary>
         /// 发起微信POST请求
         /// </summary>
         /// <param name="url">发起请求的网址</param>
         /// <param name="XMLString">XML字符串</param>
         /// <returns>返回response</returns>
-        public static HttpWebResponse CreateWxPayRequest(string url,string XMLString)
+        public static HttpWebResponse CreateWxPayRequest(string url,string XMLString,int timeout=10,bool isUseCert=true)
         {
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "post";
-            request.ContentType = "application / x - www - form - urlencoded";
+            request.ContentType = "text/xml";
+            request.Timeout = timeout * 1000;
+            ServicePointManager.DefaultConnectionLimit = 200;
+            try
+            {
+                if (url.StartsWith("https",StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
+                }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            if (!isUseCert)
+            {
+                string path = HttpContext.Current.Request.PhysicalApplicationPath;
+                X509Certificate2 cert = new X509Certificate2();
+                request.ClientCertificates.Add(cert);
+            }
             if (!String.IsNullOrEmpty(XMLString))
             {
                 byte[] data = Encoding.UTF8.GetBytes(XMLString);

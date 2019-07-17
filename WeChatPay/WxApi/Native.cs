@@ -17,15 +17,15 @@ namespace WeChatPay.WxApi
         /// <param name="startTime">交易开始时间</param>
         /// <param name="endTime">交易结束时间</param>
         /// <param name="notifyurl">回调URL</param>
-        /// <param name="type">交易类型 Native时，prodID为必填项；若为JS支付，则openid为必填项</param>
-        /// <param name="prodID">商品编号</param>
-        /// <param name="limit">指定支付方式</param>
-        /// <param name="openid">用户openid</param>
-        /// <param name="receipt">是否开具发票</param>
+        /// <param name="type"> 0代表JS支付，1代表NATIVE支付，2代表APP支付，3代表MWEB支付</param>
+        /// <param name="prodID">商品编号，交易类型 Native时，prodID为必填</param>
+        /// <param name="limit">指定支付方式，默认false，若填入true则限制不能为信用卡支付</param>
+        /// <param name="openid">用户openid，若为JS支付，则openid为必填项</param>
+        /// <param name="receipt">是否开具发票，默认false,填入true进行开票</param>
         /// <param name="detail">商品详细描述</param>
         /// <param name="attach">商品附加信息</param>
         /// <param name="tags">商品优惠标记</param>
-        /// <param name="scence">场景</param>
+        /// <param name="scence">场景，必须为json格式</param>
         /// <returns>请求结果</returns>
         public string UniteOrder(string body,string tradeNo,int cost,string IP, string notifyurl, int type,string prodID=null,bool limit=false,string openid=null,bool receipt=false, string startTime = null, string endTime = null, string detail=null,string attach=null,string tags=null,string scence=null )
         {
@@ -257,6 +257,43 @@ namespace WeChatPay.WxApi
             }
             wd.SetValue("sign", wd.MakeSign());
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.RefundQuery, wd.DicToXml());
+        }
+        /// <summary>
+        /// 微信对账单接口
+        /// </summary>
+        /// <param name="bill_date">对账日期，8位</param>
+        /// <param name="bill_type">对账单类型，0代表所有，1代表成功账单，2代表退款账单，3代表当日充值退款订单</param>
+        /// <param name="tar_type">默认true返回数据流，填入false时返回gzip格式数据</param>
+        /// <returns></returns>
+        public string DownloadBill(string bill_date,int bill_type=0,bool tar_type = true)
+        {
+            WxPayData wd = new WxPayData();
+            wd.SetValue("appid", WxPayConfig.appid);
+            wd.SetValue("mch_id", WxPayConfig.mchid);
+            wd.SetValue("nonce_str", WxUntil.GetRandomStr());
+            wd.SetValue("bill_date", bill_date);
+            switch (bill_type)
+            {
+                case 0:
+                    break;
+                case 1:
+                    wd.SetValue("bill_type", "SUCCESS");
+                    break;
+                case 2:
+                    wd.SetValue("bill_type", "REFUND");
+                    break;
+                case 3:
+                    wd.SetValue("bill_type", "RECHARGE_REFUND");
+                    break;
+                default:
+                    throw new WxPayException("请输入正确的对账单类型编码!");
+            }
+            if (!tar_type)
+            {
+                wd.SetValue("tar_type", "GZIP");
+            }
+            wd.SetValue("sign", wd.MakeSign());
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.DownloadBill, wd.DicToXml());
         }
 
     }
