@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.Security;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -46,7 +48,7 @@ namespace WeChatPay
             {
                 if (url.StartsWith("https",StringComparison.OrdinalIgnoreCase))
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
                 }
             }
             catch(Exception e)
@@ -55,7 +57,7 @@ namespace WeChatPay
             }
             if (!isUseCert)
             {
-                string path = HttpContext.Current.Request.PhysicalApplicationPath;
+                string path = Assembly.GetEntryAssembly().Location;
                 X509Certificate2 cert = new X509Certificate2();
                 request.ClientCertificates.Add(cert);
             }
