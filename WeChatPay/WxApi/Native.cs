@@ -41,10 +41,6 @@ namespace WeChatPay.WxApi
             wd.SetValue("total_fee", cost);//消费金额
             wd.SetValue("spbill_create_ip", IP);//IP地址
             wd.SetValue("notify_url", notifyurl);//回调地址
-            if (sign_type == 1)
-            {
-                wd.SetValue("sign_type", "HMAC-SHA256");//签名类型
-            }
             switch (type)
             {
                 case 0:
@@ -112,7 +108,15 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("detail", attach);
             }
-            wd.SetValue("sign", wd.MakeSign(sign_type));
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl+WxPayConfig.WxPay, wd.DicToXml());
         }
         /// <summary>
@@ -181,7 +185,6 @@ namespace WeChatPay.WxApi
         /// <summary>
         /// 微信申请退款接口
         /// </summary>
-        /// <param name="out_refund_no">商户退款单号</param>
         /// <param name="total_fee">订单金额</param>
         /// <param name="refund_fee">退款金额</param>
         /// <param name="refund_fee_type">退款货币种类</param>
@@ -192,7 +195,7 @@ namespace WeChatPay.WxApi
         /// <param name="out_trade_no">商家内部订单号</param>
         /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string Refund(string out_refund_no,int total_fee, int refund_fee,string refund_fee_type=null,string refund_desc=null,bool refund_account=true,string notify_url=null, string transaction_id = null, string out_trade_no = null,int sign_type = 0)
+        public string Refund(int total_fee, int refund_fee, string transaction_id = null, string out_trade_no = null,string refund_desc=null,bool refund_account=true,string notify_url=null,int sign_type = 0,string refund_fee_type = null)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
@@ -210,7 +213,7 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("out_trade_no", out_trade_no);
             }
-            wd.SetValue("out_refund_no", out_refund_no);
+            wd.SetValue("out_refund_no", WxUntil.CreateOrderNo(1));
             wd.SetValue("refund_fee", refund_fee);
             wd.SetValue("total_fee", total_fee);
             if (!String.IsNullOrEmpty(refund_fee_type))
@@ -238,7 +241,7 @@ namespace WeChatPay.WxApi
                 wd.SetValue("sign_type", "HMAC-SHA256");
                 wd.SetValue("sign", wd.MakeSign(sign_type));
             }
-            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.Refund, wd.DicToXml());
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.Refund, wd.DicToXml(),true);
         }
         /// <summary>
         /// 微信退款查询接口
@@ -345,6 +348,36 @@ namespace WeChatPay.WxApi
                 wd.SetValue("sign", wd.MakeSign(sign_type));
             }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.DownloadBill, wd.DicToXml());
+        }
+
+        public string DownloadFundflow(string bill_date,bool tar_type=false,int account_type=0)
+        {
+            WxPayData wd = new WxPayData();
+            wd.SetValue("appid", WxPayConfig.appid);
+            wd.SetValue("mch_id", WxPayConfig.mchid);
+            wd.SetValue("nonce_str", WxUntil.GetRandomStr());
+            wd.SetValue("bill_date", bill_date);
+            if (!tar_type)
+            {
+                wd.SetValue("tar_type", "GZIP");
+            }
+            switch (account_type)
+            {
+                case 0:
+                    wd.SetValue("account_type", "Basic");
+                    break;
+                case 1:
+                    wd.SetValue("account_type", "Operation");
+                    break;
+                case 2:
+                    wd.SetValue("account_type", "Fees");
+                    break;
+                default:
+                    throw new WxPayException("请输入正确的资金来源账户代码！");
+            }
+            wd.SetValue("sign_type", "HMAC-SHA256");
+            wd.SetValue("sign", wd.MakeSign(1));
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.DownloadFundflow, wd.DicToXml(),true);
         }
 
     }

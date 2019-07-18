@@ -16,14 +16,16 @@ namespace WeChatPay
     public static class WxUntil
     {
         /// <summary>
-        /// 发送POST请求并解析返回值
+        /// 发起post请求并将回应解析为string
         /// </summary>
-        /// <param name="url">请求网址</param>
-        /// <param name="XMLString">xml格式数据</param>
-        /// <returns>返回</returns>
-        public static string GetPostFinallyStr(string url, string XMLString)
+        /// <param name="url">发起请求的url</param>
+        /// <param name="XMLString">解析后的xml数据</param>
+        /// <param name="isUseCert">是否使用证书</param>
+        /// <param name="timeout">超时时间</param>
+        /// <returns></returns>
+        public static string GetPostFinallyStr(string url, string XMLString,bool isUseCert=false,int timeout = 10)
         {
-            return GetResponseStr(CreateWxPayRequest(url, XMLString));
+            return GetResponseStr(CreateWxPayRequest(url, XMLString,isUseCert,timeout));
         }
 
         public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -39,7 +41,7 @@ namespace WeChatPay
         /// <param name="timeout">响应过期时间，默认10秒</param>
         /// <param name="isUseCert">https是否使用证书认证</param>
         /// <returns></returns>
-        public static HttpWebResponse CreateWxPayRequest(string url,string XMLString,int timeout=10,bool isUseCert=true)
+        public static HttpWebResponse CreateWxPayRequest(string url,string XMLString,bool isUseCert=false,int timeout=10)
         {
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "post";
