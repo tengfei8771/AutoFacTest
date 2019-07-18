@@ -157,5 +157,30 @@ namespace WeChatPay
         {
             return DateTime.Now.AddMinutes(min).ToString("yyyyMMddhhmmss");
         }
+
+        public static string CreateOrderNo(int type=0)
+        {
+            const string conStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            StringBuilder sb = new StringBuilder();
+            if (type == 0)
+            {
+                sb.Append("DD");
+            }
+            else if (type == 1)
+            {
+                sb.Append("TK");
+            }
+            else
+            {
+                throw new WxPayException("请输入正确的订单类型");
+            }
+            sb.Append(DateTime.Now.ToString("yyyyMMddhhmmss"));
+            Random rd = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                sb.Append(conStr[rd.Next(0, conStr.Length)]);
+            }
+            return sb.ToString();
+        }
     }
 }

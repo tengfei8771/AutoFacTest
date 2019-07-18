@@ -11,7 +11,6 @@ namespace WeChatPay.WxApi
         /// 统一下单接口
         /// </summary>
         /// <param name="body">商品描述</param>
-        /// <param name="tradeNo">内部生成的订单号</param>
         /// <param name="cost">费用，单位为分</param>
         /// <param name="IP">设备的IP</param>
         /// <param name="startTime">交易开始时间</param>
@@ -26,8 +25,9 @@ namespace WeChatPay.WxApi
         /// <param name="attach">商品附加信息</param>
         /// <param name="tags">商品优惠标记</param>
         /// <param name="scence">场景，必须为json格式</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns>请求结果</returns>
-        public string UniteOrder(string body,string tradeNo,int cost,string IP, string notifyurl, int type,string prodID=null,bool limit=false,string openid=null,bool receipt=false, string startTime = null, string endTime = null, string detail=null,string attach=null,string tags=null,string scence=null )
+        public string UniteOrder(string body,int cost,string IP, string notifyurl, int type,string prodID=null,bool limit=false,string openid=null,bool receipt=false, string startTime = null, string endTime = null, string detail=null,string attach=null,string tags=null,string scence=null,int sign_type=0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);//用户公众号appid
@@ -37,10 +37,14 @@ namespace WeChatPay.WxApi
             //wd.SetValue("sign_type", "MD5");//签名类型
             wd.SetValue("fee_type", "CNY");//货币种类
             wd.SetValue("body", body);//商品描述
-            wd.SetValue("out_trade_no", tradeNo);//系统内部生成的订单号
+            wd.SetValue("out_trade_no", WxUntil.CreateOrderNo());//系统内部生成的订单号
             wd.SetValue("total_fee", cost);//消费金额
             wd.SetValue("spbill_create_ip", IP);//IP地址
             wd.SetValue("notify_url", notifyurl);//回调地址
+            if (sign_type == 1)
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");//签名类型
+            }
             switch (type)
             {
                 case 0:
@@ -108,6 +112,7 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("detail", attach);
             }
+            wd.SetValue("sign", wd.MakeSign(sign_type));
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl+WxPayConfig.WxPay, wd.DicToXml());
         }
         /// <summary>
@@ -115,8 +120,9 @@ namespace WeChatPay.WxApi
         /// </summary>
         /// <param name="transaction_id">微信订单号</param>
         /// <param name="out_trade_no">商家内部订单号</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string QueryOrder(string transaction_id = null, string out_trade_no = null)
+        public string QueryOrder(string transaction_id = null, string out_trade_no = null,int sign_type = 0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
@@ -134,7 +140,16 @@ namespace WeChatPay.WxApi
                 wd.SetValue("out_trade_no", out_trade_no );
             }
             wd.SetValue("nonce_str", WxUntil.GetRandomStr());
-            wd.SetValue("sign", wd.MakeSign());
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
+            
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.OrderQuery, wd.DicToXml());
         }
 
@@ -142,15 +157,24 @@ namespace WeChatPay.WxApi
         /// 关闭订单接口
         /// </summary>
         /// <param name="out_trade_no">商家内部订单号</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string CloseOrder(string out_trade_no)
+        public string CloseOrder(string out_trade_no, int sign_type = 0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
             wd.SetValue("mch_id", WxPayConfig.mchid);
             wd.SetValue("out_trade_no", out_trade_no);
             wd.SetValue("nonce_str", WxUntil.GetRandomStr());
-            wd.SetValue("sign", wd.MakeSign());
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.CloseOrder,wd.DicToXml());
 
         }
@@ -166,8 +190,9 @@ namespace WeChatPay.WxApi
         /// <param name="notify_url">回调地址</param>
         /// <param name="transaction_id">微信订单号</param>
         /// <param name="out_trade_no">商家内部订单号</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string Refund(string out_refund_no,int total_fee, int refund_fee,string refund_fee_type=null,string refund_desc=null,bool refund_account=true,string notify_url=null, string transaction_id = null, string out_trade_no = null)
+        public string Refund(string out_refund_no,int total_fee, int refund_fee,string refund_fee_type=null,string refund_desc=null,bool refund_account=true,string notify_url=null, string transaction_id = null, string out_trade_no = null,int sign_type = 0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
@@ -204,7 +229,15 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("notify_url", notify_url);
             }
-            wd.SetValue("sign", wd.MakeSign());
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.Refund, wd.DicToXml());
         }
         /// <summary>
@@ -215,8 +248,9 @@ namespace WeChatPay.WxApi
         /// <param name="transaction_id">微信订单号</param>
         /// <param name="out_trade_no">商户订单号</param>
         /// <param name="offset">偏移量</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string RefundQuery(string refund_id=null, string out_refund_no=null,string transaction_id=null,string out_trade_no=null, int offset=0)
+        public string RefundQuery(string refund_id=null, string out_refund_no=null,string transaction_id=null,string out_trade_no=null, int offset=0,int sign_type=0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
@@ -255,7 +289,15 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("offset", offset);
             }
-            wd.SetValue("sign", wd.MakeSign());
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.RefundQuery, wd.DicToXml());
         }
         /// <summary>
@@ -264,8 +306,9 @@ namespace WeChatPay.WxApi
         /// <param name="bill_date">对账日期，8位</param>
         /// <param name="bill_type">对账单类型，0代表所有，1代表成功账单，2代表退款账单，3代表当日充值退款订单</param>
         /// <param name="tar_type">默认true返回数据流，填入false时返回gzip格式数据</param>
+        /// <param name="sign_type">签名类型，默认为0，代表MD5加密方式，1为SHA256加密方式，填入其他参数抛出异常</param>
         /// <returns></returns>
-        public string DownloadBill(string bill_date,int bill_type=0,bool tar_type = true)
+        public string DownloadBill(string bill_date,int bill_type=0,bool tar_type = true,int sign_type = 0)
         {
             WxPayData wd = new WxPayData();
             wd.SetValue("appid", WxPayConfig.appid);
@@ -292,7 +335,15 @@ namespace WeChatPay.WxApi
             {
                 wd.SetValue("tar_type", "GZIP");
             }
-            wd.SetValue("sign", wd.MakeSign());
+            if (sign_type == 0)
+            {
+                wd.SetValue("sign", wd.MakeSign());
+            }
+            else
+            {
+                wd.SetValue("sign_type", "HMAC-SHA256");
+                wd.SetValue("sign", wd.MakeSign(sign_type));
+            }
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.DownloadBill, wd.DicToXml());
         }
 

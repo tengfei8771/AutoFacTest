@@ -152,12 +152,27 @@ namespace WeChatPay
             {
                 if (res["sign"]==null||res["sign"].ToString()=="")
                 {
-                    throw new WxPayException("返回数据签名存在但是为空!");
+                    throw new WxPayException("返回数据签名存在但是为空!"); 
                 }
                 string sign = res["sign"].ToString();
                 res.Remove("sign");
-                string MD5Str = MakeSign();
-                if (sign== MD5Str)
+                string passStr = String.Empty;
+                if (res.ContainsKey("sign_type"))
+                {
+                    if (res["sign_type"].ToString() == "MD5")
+                    {
+                        passStr = MakeSign();
+                    }
+                    else if(res["sign_type"].ToString() == "HMAC-SHA256")
+                    {
+                        passStr = MakeSign(1);
+                    }
+                }
+                else
+                {
+                    passStr = MakeSign();
+                }
+                if (sign == passStr)
                 {
                     return true;
                 }
@@ -245,9 +260,21 @@ namespace WeChatPay
             }              
         }
 
-        public string MakeSign()
+        public string MakeSign(int signType=0)
         {
-            return MD5Sign(SecretStr(DicToUrl()));
+            if (signType==0)
+            {
+                return MD5Sign(SecretStr(DicToUrl()));
+            }
+            else if(signType== 1)
+            {
+                return SHA256(SecretStr(DicToUrl()));
+            }
+            else
+            {
+                throw new WxPayException("请输入正确的加密参数!");
+            }
+           
         }
     }
 }
