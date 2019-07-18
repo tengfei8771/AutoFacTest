@@ -202,8 +202,8 @@ namespace WeChatPay
         /// <summary>
         /// 分析退款结果方法
         /// </summary>
-        /// <param name="XMLStr">接收道的xml数据</param>
-        /// <returns></returns>
+        /// <param name="XMLStr">接收到的xml数据</param>
+        /// <returns>将明文xml和秘文xml组装成一个SortedDictionary</returns>
         public static SortedDictionary<string, object> AnalysisNotification(string XMLStr)
         {
             SortedDictionary<string, object> s = new SortedDictionary<string, object>();
