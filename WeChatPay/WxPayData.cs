@@ -97,7 +97,7 @@ namespace WeChatPay
             else
             {
                 SetValue("nonce_str", WxUntil.GetRandomStr());
-                SetValue("sign", MD5Sign(SecretStr(DicToUrl())));  
+                SetValue("sign", WxUntil.MD5Sign(SecretStr(DicToUrl())));  
             }
         }
 
@@ -231,44 +231,17 @@ namespace WeChatPay
         /// </summary>
         /// <param name="CompositeString">参数字符串和秘钥字符串拼接而成的字符串</param>
         /// <returns>MD5加密后的字符串</returns>
-        public string MD5Sign(string CompositeString)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] bt = Encoding.UTF8.GetBytes(CompositeString);
-            byte[] bt1 = md5.ComputeHash(bt);
-            string byte2String = String.Empty;
-            foreach(byte b in bt1) 
-            {
-                byte2String += b.ToString("X2");
-            }
-            return byte2String;
-        }
-
-        public string SHA256(string CompositeString)
-        {
-            byte[] msg = Encoding.UTF8.GetBytes(CompositeString);
-            byte[] key = Encoding.UTF8.GetBytes(WxPayConfig.key);
-            string byte2String = String.Empty;
-            using (HMACSHA256 h=new HMACSHA256(key))
-            {
-                byte[] hash = h.ComputeHash(msg);
-                foreach (byte b in hash)
-                {
-                    byte2String += b.ToString("X2");
-                }
-                return byte2String;
-            }              
-        }
+        
 
         public string MakeSign(int signType=0)
         {
             if (signType==0)
             {
-                return MD5Sign(SecretStr(DicToUrl()));
+                return WxUntil.MD5Sign(SecretStr(DicToUrl()));
             }
             else if(signType== 1)
             {
-                return SHA256(SecretStr(DicToUrl()));
+                return WxUntil.SHA256(SecretStr(DicToUrl()));
             }
             else
             {
