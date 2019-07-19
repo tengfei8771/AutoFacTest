@@ -27,5 +27,6 @@ namespace WeChatPay
         public static readonly string RefundQuery = "/secapi/pay/refundquery";//退款查询接口
         public static readonly string DownloadBill = "/pay/downloadbill";//下载对账单接口
         public static readonly string DownloadFundflow = "/pay/downloadfundflow";//下载资金对账单
+        public static readonly string BatchQueryComment = "/billcommentsp/batchquerycomment";//拉取评价数据
     }
 }

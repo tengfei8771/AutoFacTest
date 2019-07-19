@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace WeChatPay.WxApi
 {
@@ -379,6 +380,52 @@ namespace WeChatPay.WxApi
             wd.SetValue("sign", wd.MakeSign(1));
             return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.DownloadFundflow, wd.DicToXml(),true);
         }
+
+
+        public string BatchQueryComment(string begin_time,string end_time,uint offset=0,uint limit=200,bool GetAll=false)
+        {
+            WxPayData wd = new WxPayData();
+            wd.SetValue("appid", WxPayConfig.appid);
+            wd.SetValue("mch_id", WxPayConfig.mchid);
+            wd.SetValue("nonce_str", WxUntil.GetRandomStr());
+            wd.SetValue("begin_time", begin_time);
+            wd.SetValue("end_time", end_time);
+            if (offset != 0)
+            {
+                wd.SetValue("offset", offset);
+            }
+            if (limit != 200)
+            {
+                wd.SetValue("limit", limit);
+            }
+            wd.SetValue("sign", wd.MakeSign(1));
+            return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.BatchQueryComment, wd.DicToXml(), true);
+            //if (!GetAll)
+            //{
+            //    return WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.BatchQueryComment, wd.DicToXml(), true);
+            //}
+            //else
+            //{
+            //    string result= WxUntil.GetPostFinallyStr(WxPayConfig.BaseUrl + WxPayConfig.BatchQueryComment, wd.DicToXml(), true);
+            //    if (result.Contains("<return_code>")&&result.Contains("<return_msg>"))
+            //    {
+            //        return result;
+            //    }
+            //    else
+            //    {
+            //        int index = result.IndexOf('`');
+            //        string NumStr = String.Empty;
+            //        for(int i = 0; i <= index; i++)
+            //        {
+            //            NumStr += result[i];
+            //        }
+            //        num
+            //    }
+
+            //}
+
+        }
+
 
     }
 }
