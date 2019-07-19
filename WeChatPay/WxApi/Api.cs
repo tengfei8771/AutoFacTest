@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WeChatPay.WxApi
 {
-    public class Native
+    public class Api
     {
         /// <summary>
         /// 统一下单接口
