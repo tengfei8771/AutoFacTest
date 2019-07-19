@@ -12,8 +12,9 @@ namespace WeChatPlatform.API
         /// 获取关注本公众号内前10000个人的openid,超过10000万人递归拼接成一条完整的消息
         /// </summary>
         /// <param name="openid">从哪个人开始查询，可不填</param>
+        /// <param name="GetAll">是否获取全部关注的用户信息，默认false，填入true则递归拉取全部数据</param>
         /// <returns></returns>
-        public string GetUserList(string openid=null)
+        public string GetUserList(string openid=null,bool GetAll=false)
         {
             string url = Until.CreateUrl(UrlConfig.GetUserList)+ "&next_openid="+openid;
             RequestHelper request = new RequestHelper();
@@ -23,7 +24,7 @@ namespace WeChatPlatform.API
             {
                 throw new Exception(errMsg.GetErrMsg((int)obj["errcode"]));
             }
-            if (obj["next_openid"] != null && obj["next_openid"].ToString() != "")
+            if (obj["next_openid"] != null && obj["next_openid"].ToString() != ""&&GetAll)
             {
                 JArray UserList = JArray.Parse(obj["openid"].ToString());
                 GetUserChildrenList(obj["next_openid"].ToString(), UserList);
